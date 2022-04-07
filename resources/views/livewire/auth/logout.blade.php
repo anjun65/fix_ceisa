@@ -1,0 +1,3 @@
+<div>
+    <a wire:click="logout" class="text-xs leading-4 font-medium text-green-500 group-hover:text-green-100 transition ease-in-out duration-150">Log out</i></a>
+</div>
