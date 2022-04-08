@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\DataPeti as DataPetiModel;
@@ -72,39 +72,6 @@ class DataPeti extends Component
         $this->showFilters = ! $this->showFilters;
     }
 
-    public function create()
-    {
-        $this->useCachedRows();
-
-        if ($this->editing->getKey()) $this->editing = $this->makeBlankTransaction();
-
-        $this->showEditModal = true;
-    }
-
-    public function edit(DataPetiModel $transaction)
-    {
-        $this->useCachedRows();
-
-        if ($this->editing->isNot($transaction)) $this->editing = $transaction;
-
-        $this->showEditModal = true;
-    }
-
-    public function save()
-    {
-        $this->validate();
-
-        $this->editing->fill([
-            'nomor_pengajuan_dokumen' => $this->filters['nomor_pengajuan_dokumen'],
-        ]);
-
-        $this->editing->save();
-        
-        $this->notify('Data Tersimpan');
-
-        $this->showEditModal = false;
-    }
-
     public function resetFilters() { $this->reset('filters'); }
 
     public function getRowsQueryProperty()
@@ -125,7 +92,7 @@ class DataPeti extends Component
 
     public function render()
     {
-        return view('livewire.data-peti', [
+        return view('livewire.admin.data-peti', [
             'items' => $this->rows,
             'nomor_aju_pabean' => $this->nomor,
         ]);

@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
-use App\Models\DataPeti as DataPetiModel;
-use Illuminate\Support\Carbon;
 use App\Http\Livewire\DataTable\WithSorting;
 use App\Http\Livewire\DataTable\WithCachedRows;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use App\Http\Livewire\DataTable\WithPerPagePagination;
+use App\Models\DataBarang as DatabarangModel;
 use Livewire\WithFileUploads;
 
-class DataPeti extends Component
+class DataBarang extends Component
 {
     use WithPerPagePagination, WithSorting, WithBulkActions, WithCachedRows, WithFileUploads;
 
@@ -20,20 +19,23 @@ class DataPeti extends Component
     public $showFilters = false;
     public $filters = [
         'search' => '',
+        'nomor_pengajuan_dokumen' => '',
     ];
-    
-    public DataPetiModel $editing;
-    public $upload;
+
     public $nomor;
+    public DatabarangModel $editing;
+    public $upload;
 
     protected $queryString = ['sorts'];
 
     protected $listeners = ['refreshTransactions' => '$refresh'];
 
     public function rules() { return [
-        'editing.nomor' => 'required',
-        'editing.tipe' => 'required',
-        'editing.ukuran' => 'required',
+        'editing.pos_tarif' => 'required',
+        'editing.uraian_barang' => 'required',
+        'editing.merek' => 'required',
+        'editing.jumlah_satuan' => 'required',
+        'editing.bruto' => 'required',
     ]; }
 
     public function mount($nomor_aju_pabean) { 
@@ -62,7 +64,7 @@ class DataPeti extends Component
 
     public function makeBlankTransaction()
     {
-        return DataPetiModel::make(['date' => now(), 'status' => 'success']);
+        return DatabarangModel::make(['date' => now(), 'status' => 'success']);
     }
 
     public function toggleShowFilters()
@@ -81,36 +83,12 @@ class DataPeti extends Component
         $this->showEditModal = true;
     }
 
-    public function edit(DataPetiModel $transaction)
-    {
-        $this->useCachedRows();
-
-        if ($this->editing->isNot($transaction)) $this->editing = $transaction;
-
-        $this->showEditModal = true;
-    }
-
-    public function save()
-    {
-        $this->validate();
-
-        $this->editing->fill([
-            'nomor_pengajuan_dokumen' => $this->filters['nomor_pengajuan_dokumen'],
-        ]);
-
-        $this->editing->save();
-        
-        $this->notify('Data Tersimpan');
-
-        $this->showEditModal = false;
-    }
-
     public function resetFilters() { $this->reset('filters'); }
 
     public function getRowsQueryProperty()
     {
-        $query = DataPetiModel::query()
-            ->when($this->filters['search'], fn($query, $search) => $query->where('seri', $search ))
+        $query = DatabarangModel::query()
+            ->when($this->filters['search'], fn($query, $search) => $query->where('nomor', $search ))
             ->when($this->nomor, fn($query, $nomor_pengajuan_dokumen) => $query->where('nomor_pengajuan_dokumen', $nomor_pengajuan_dokumen));
 
         return $this->applySorting($query);
@@ -125,7 +103,7 @@ class DataPeti extends Component
 
     public function render()
     {
-        return view('livewire.data-peti', [
+        return view('livewire.admin.data-barang', [
             'items' => $this->rows,
             'nomor_aju_pabean' => $this->nomor,
         ]);

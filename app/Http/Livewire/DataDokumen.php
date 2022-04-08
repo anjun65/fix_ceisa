@@ -26,6 +26,7 @@ class DataDokumen extends Component
     public $users_id;
     public DataDokumenModel $editing;
     public $upload;
+    public $nomor;
 
     protected $queryString = ['sorts'];
 
@@ -39,7 +40,7 @@ class DataDokumen extends Component
     ]; }
 
     public function mount($nomor_aju_pabean) {
-        $this->filters['nomor_pengajuan_dokumen'] = $nomor_aju_pabean;
+        $this->nomor= $nomor_aju_pabean;
         $this->editing = $this->makeBlankTransaction();
     }
     public function updatedFilters() { $this->resetPage(); }
@@ -98,7 +99,7 @@ class DataDokumen extends Component
         $this->validate();
 
         $this->editing->fill([
-            'nomor_pengajuan_dokumen' => $this->filters['nomor_pengajuan_dokumen'],
+            'nomor_pengajuan_dokumen' => $this->nomor,
             'file' => $this->upload->store('data_dokumen'),
         ]);
 
@@ -115,7 +116,7 @@ class DataDokumen extends Component
         $query = DataDokumenModel::query()
             ->when($this->users_id, fn($query, $users_id) => $query->where('users_id', $users_id))
             ->when($this->filters['search'], fn($query, $search) => $query->where('seri', 'like', '%'.$search.'%'))
-            ->when($this->filters['nomor_pengajuan_dokumen'], fn($query, $nomor_pengajuan_dokumen) => $query->where('nomor_pengajuan_dokumen', $nomor_pengajuan_dokumen));
+            ->when($this->nomor, fn($query, $nomor_pengajuan_dokumen) => $query->where('nomor_pengajuan_dokumen', $nomor_pengajuan_dokumen));
 
         return $this->applySorting($query);
     }
@@ -131,7 +132,7 @@ class DataDokumen extends Component
     {
         return view('livewire.data-dokumen', [
             'items' => $this->rows,
-            'nomor_aju_pabean' => $this->filters['nomor_pengajuan_dokumen'],
+            'nomor_aju_pabean' => $this->nomor,
         ]);
     }
 }

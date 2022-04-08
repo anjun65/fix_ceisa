@@ -4,19 +4,19 @@
     <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
         <ul class="flex flex-wrap -mb-px">
             <li class="mr-2">
-                <a href="{{ route('edit-pabean', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Header</a>
+                <a href="{{ route('admin-edit-pabean', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Header</a>
             </li>
             <li class="mr-2">
-                <a href="{{ route('edit-dokumen', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" >Data Dokumen</a>
+                <a href="{{ route('admin-edit-dokumen', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" >Data Dokumen</a>
             </li>
             <li class="mr-2">
-                <a href="{{ route('edit-peti', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Data Peti Kemas</a>
+                <a href="{{ route('admin-edit-peti', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Data Peti Kemas</a>
             </li>
             <li class="mr-2">
-                <a href="{{ route('edit-kemasan', $nomor_aju_pabean )}}" class="inline-block p-4 text-blue-600 rounded-t-lg border-b-2 border-blue-600 active dark:text-blue-500 dark:border-blue-500" aria-current="page">Data Kemasan</a>
+                <a href="{{ route('admin-edit-kemasan', $nomor_aju_pabean )}}" class="inline-block p-4 text-blue-600 rounded-t-lg border-b-2 border-blue-600 active dark:text-blue-500 dark:border-blue-500" aria-current="page">Data Kemasan</a>
             </li>
             <li class="mr-2">
-                <a href="{{ route('edit-barang', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Data Barang</a>
+                <a href="{{ route('admin-edit-barang', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Data Barang</a>
             </li>
         </ul>
     </div>
@@ -46,8 +46,6 @@
                             <x-icon.trash class="text-cool-gray-400"/> <span>Hapus</span>
                         </x-dropdown.item>
                     </x-dropdown>
-
-                    <x-button.primary wire:click="create"><x-icon.plus/> Baru</x-button.primary>
                 </div>
             </div>
 
@@ -100,10 +98,6 @@
                             <x-table.cell>
                                 <span class="text-cool-gray-900 font-medium">{{ $item->merk }} </span>
                             </x-table.cell>
-
-                            <x-table.cell>
-                                <x-button.link wire:click="edit({{ $item->id }})">Edit</x-button.link>
-                            </x-table.cell>
                         </x-table.row>
                         @empty
                         <x-table.row>
@@ -140,38 +134,5 @@
                 <x-button.primary type="submit">Hapus</x-button.primary>
             </x-slot>
         </x-modal.confirmation>
-    </form>
-
-    <!-- Save Transaction Modal -->
-    <form wire:submit.prevent="save">
-        <x-modal.dialog wire:model.defer="showEditModal">
-            <x-slot name="title">List Data Kemasan</x-slot>
-
-            <x-slot name="content">
-
-                <x-input.group for="jumlah" label="Jumlah Kemasan" :error="$errors->first('editing.jumlah')">
-                    <x-input.text type="number" wire:model="editing.jumlah" id="jumlah" placeholder="Jumlah Kemasan" />
-                </x-input.group>
-
-                <x-input.group for="jenis" label="Jenis Kemasan" :error="$errors->first('editing.jenis')">
-                    <x-input.select wire:model="editing.jenis" id="jenis">
-                        <option value="" selected>Belum Memilih</option>
-                        <option value="1A - DRUM, STEEL">1A - DRUM STEEL</option>
-                        <option value="1B - DRUM, ALUMUNIUM">1B - DRUM, ALUMUNIUM</option>
-                        <option value="1D - DRUM, PLYWOOD">1D - DRUM, PLYWOOD</option>
-                    </x-input.select>
-                </x-input.group>
-
-                <x-input.group for="merk" label="Merk Kemasan" :error="$errors->first('editing.merk')">
-                    <x-input.text wire:model="editing.merk" id="merk" placeholder="Merk Kemasan" />
-                </x-input.group>
-            </x-slot>
-
-            <x-slot name="footer">
-                <x-button.secondary wire:click="$set('showEditModal', false)">Cancel</x-button.secondary>
-
-                <x-button.primary type="submit">Save</x-button.primary>
-            </x-slot>
-        </x-modal.dialog>
     </form>
 </div>

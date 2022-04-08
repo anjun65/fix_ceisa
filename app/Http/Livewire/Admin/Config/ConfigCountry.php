@@ -1,52 +1,46 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Admin\Config;
 
 use Livewire\Component;
-use App\Models\DataPeti as DataPetiModel;
-use Illuminate\Support\Carbon;
+use App\Models\ConfigCountry as CountryModel;
 use App\Http\Livewire\DataTable\WithSorting;
 use App\Http\Livewire\DataTable\WithCachedRows;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use App\Http\Livewire\DataTable\WithPerPagePagination;
-use Livewire\WithFileUploads;
 
-class DataPeti extends Component
+class ConfigCountry extends Component
 {
-    use WithPerPagePagination, WithSorting, WithBulkActions, WithCachedRows, WithFileUploads;
+
+    use WithPerPagePagination, WithSorting, WithBulkActions, WithCachedRows;
 
     public $showDeleteModal = false;
     public $showEditModal = false;
     public $showFilters = false;
     public $filters = [
-        'search' => '',
+        'code' => '',
+        'name' => '',
     ];
-    
-    public DataPetiModel $editing;
-    public $upload;
-    public $nomor;
+    public CountryModel $editing;
 
     protected $queryString = ['sorts'];
 
     protected $listeners = ['refreshTransactions' => '$refresh'];
 
     public function rules() { return [
-        'editing.nomor' => 'required',
-        'editing.tipe' => 'required',
-        'editing.ukuran' => 'required',
+        'editing.code' => 'required',
+        'editing.name' => 'required',
+        // 'editing.status' => 'required|in:'.collect(Kuasa::STATUSES)->keys()->implode(','),
     ]; }
 
-    public function mount($nomor_aju_pabean) { 
-        $this->nomor = $nomor_aju_pabean;
-        $this->editing = $this->makeBlankTransaction();
-    }
+    public function mount() { $this->editing = $this->makeBlankTransaction(); }
     public function updatedFilters() { $this->resetPage(); }
 
     public function exportSelected()
     {
         return response()->streamDownload(function () {
             echo $this->selectedRowsQuery->toCsv();
-        }, 'izin_impor.csv');
+        }, 'negara.csv');
     }
 
     public function deleteSelected()
@@ -62,7 +56,7 @@ class DataPeti extends Component
 
     public function makeBlankTransaction()
     {
-        return DataPetiModel::make(['date' => now(), 'status' => 'success']);
+        return CountryModel::make();
     }
 
     public function toggleShowFilters()
@@ -81,7 +75,7 @@ class DataPeti extends Component
         $this->showEditModal = true;
     }
 
-    public function edit(DataPetiModel $transaction)
+    public function edit(CountryModel $transaction)
     {
         $this->useCachedRows();
 
@@ -94,13 +88,7 @@ class DataPeti extends Component
     {
         $this->validate();
 
-        $this->editing->fill([
-            'nomor_pengajuan_dokumen' => $this->filters['nomor_pengajuan_dokumen'],
-        ]);
-
         $this->editing->save();
-        
-        $this->notify('Data Tersimpan');
 
         $this->showEditModal = false;
     }
@@ -109,9 +97,9 @@ class DataPeti extends Component
 
     public function getRowsQueryProperty()
     {
-        $query = DataPetiModel::query()
-            ->when($this->filters['search'], fn($query, $search) => $query->where('seri', $search ))
-            ->when($this->nomor, fn($query, $nomor_pengajuan_dokumen) => $query->where('nomor_pengajuan_dokumen', $nomor_pengajuan_dokumen));
+        $query = CountryModel::query()
+            ->when($this->filters['code'], fn($query, $code) => $query->where('code', 'like', '%'.$code.'%'))
+            ->when($this->filters['name'], fn($query, $name) => $query->where('name', 'like', '%'.$name.'%'));
 
         return $this->applySorting($query);
     }
@@ -125,9 +113,8 @@ class DataPeti extends Component
 
     public function render()
     {
-        return view('livewire.data-peti', [
+        return view('livewire.admin.config.config-country', [
             'items' => $this->rows,
-            'nomor_aju_pabean' => $this->nomor,
-        ]);
+        ])->layout('layouts.admin');
     }
 }

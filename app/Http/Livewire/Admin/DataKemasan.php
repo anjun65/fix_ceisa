@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
-use App\Models\DataPeti as DataPetiModel;
+use App\Models\DataKemasan as DataKemasanModel;
 use Illuminate\Support\Carbon;
 use App\Http\Livewire\DataTable\WithSorting;
 use App\Http\Livewire\DataTable\WithCachedRows;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use App\Http\Livewire\DataTable\WithPerPagePagination;
 use Livewire\WithFileUploads;
+use Auth;
 
-class DataPeti extends Component
+
+class DataKemasan extends Component
 {
     use WithPerPagePagination, WithSorting, WithBulkActions, WithCachedRows, WithFileUploads;
 
@@ -20,20 +22,21 @@ class DataPeti extends Component
     public $showFilters = false;
     public $filters = [
         'search' => '',
+        'nomor_pengajuan_dokumen' => '',
     ];
-    
-    public DataPetiModel $editing;
-    public $upload;
+
     public $nomor;
+    public DataKemasanModel $editing;
+    public $upload;
 
     protected $queryString = ['sorts'];
 
     protected $listeners = ['refreshTransactions' => '$refresh'];
 
     public function rules() { return [
-        'editing.nomor' => 'required',
-        'editing.tipe' => 'required',
-        'editing.ukuran' => 'required',
+        'editing.jumlah' => 'required',
+        'editing.jenis' => 'required',
+        'editing.merk' => 'required',
     ]; }
 
     public function mount($nomor_aju_pabean) { 
@@ -62,7 +65,7 @@ class DataPeti extends Component
 
     public function makeBlankTransaction()
     {
-        return DataPetiModel::make(['date' => now(), 'status' => 'success']);
+        return DataKemasanModel::make(['date' => now(), 'status' => 'success']);
     }
 
     public function toggleShowFilters()
@@ -81,7 +84,7 @@ class DataPeti extends Component
         $this->showEditModal = true;
     }
 
-    public function edit(DataPetiModel $transaction)
+    public function edit(DataKemasanModel $transaction)
     {
         $this->useCachedRows();
 
@@ -98,6 +101,8 @@ class DataPeti extends Component
             'nomor_pengajuan_dokumen' => $this->filters['nomor_pengajuan_dokumen'],
         ]);
 
+        $this->emitSelf('notify-saved');
+
         $this->editing->save();
         
         $this->notify('Data Tersimpan');
@@ -109,8 +114,8 @@ class DataPeti extends Component
 
     public function getRowsQueryProperty()
     {
-        $query = DataPetiModel::query()
-            ->when($this->filters['search'], fn($query, $search) => $query->where('seri', $search ))
+        $query = DataKemasanModel::query()
+            ->when($this->filters['search'], fn($query, $search) => $query->where('nomor', $search ))
             ->when($this->nomor, fn($query, $nomor_pengajuan_dokumen) => $query->where('nomor_pengajuan_dokumen', $nomor_pengajuan_dokumen));
 
         return $this->applySorting($query);
@@ -125,7 +130,7 @@ class DataPeti extends Component
 
     public function render()
     {
-        return view('livewire.data-peti', [
+        return view('livewire.admin.data-kemasan', [
             'items' => $this->rows,
             'nomor_aju_pabean' => $this->nomor,
         ]);

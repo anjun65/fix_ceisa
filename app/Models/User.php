@@ -12,6 +12,10 @@ class User extends Authenticatable
     use Notifiable, HasFactory;
 
     protected $fillable = [
+        'nomorInduk',
+        'username',
+        'name',
+        'email',
         'roles',
     ];
 

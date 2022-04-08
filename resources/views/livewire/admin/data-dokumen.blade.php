@@ -4,19 +4,19 @@
     <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
         <ul class="flex flex-wrap -mb-px">
             <li class="mr-2">
-                <a href="{{ route('edit-pabean', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Header</a>
+                <a href="{{ route('admin-edit-pabean', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Header</a>
             </li>
             <li class="mr-2">
-                <a href="{{ route('edit-dokumen', $nomor_aju_pabean )}}" class="inline-block p-4 text-blue-600 rounded-t-lg border-b-2 border-blue-600 active dark:text-blue-500 dark:border-blue-500" >Data Dokumen</a>
+                <a href="{{ route('admin-edit-dokumen', $nomor_aju_pabean )}}" class="inline-block p-4 text-blue-600 rounded-t-lg border-b-2 border-blue-600 active dark:text-blue-500 dark:border-blue-500" >Data Dokumen</a>
             </li>
             <li class="mr-2">
-                <a href="{{ route('edit-peti', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Data Peti Kemas</a>
+                <a href="{{ route('admin-edit-peti', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Data Peti Kemas</a>
             </li>
             <li class="mr-2">
-                <a href="{{ route('edit-kemasan', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" aria-current="page">Data Kemasan</a>
+                <a href="{{ route('admin-edit-kemasan', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" aria-current="page">Data Kemasan</a>
             </li>
             <li class="mr-2">
-                <a href="{{ route('edit-barang', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Data Barang</a>
+                <a href="{{ route('admin-edit-barang', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Data Barang</a>
             </li>
         </ul>
     </div>
@@ -47,8 +47,6 @@
                         <x-icon.trash class="text-cool-gray-400"/> <span>Hapus</span>
                     </x-dropdown.item>
                 </x-dropdown>
-
-                <x-button.primary wire:click="create"><x-icon.plus/> Baru</x-button.primary>
             </div>
         </div>
 
@@ -65,8 +63,6 @@
                     <x-table.heading sortable multi-column wire:click="sortBy('jenis_dokumen')" :direction="$sorts['jenis_dokumen'] ?? null">Jenis Dokumen</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('nomor_dokumen')" :direction="$sorts['nomor_dokumen'] ?? null">Nomor Dokumen</x-table.heading>
                     <x-table.heading sortable multi-column wire:click="sortBy('tanggal_dokumen')" :direction="$sorts['tanggal_dokumen'] ?? null">Tanggal Dokumen</x-table.heading>
-
-                    <x-table.heading />
                 </x-slot>
 
                 <x-slot name="body">
@@ -106,10 +102,6 @@
                         <x-table.cell>
                             <span class="text-cool-gray-900 font-medium">{{ $item->tanggal_dokumen }} </span>
                         </x-table.cell>
-
-                        <x-table.cell>
-                            <x-button.link wire:click="edit({{ $item->id }})">Edit</x-button.link>
-                        </x-table.cell>
                     </x-table.row>
                     @empty
                     <x-table.row>
@@ -148,48 +140,5 @@
         </x-modal.confirmation>
     </form>
 
-    <!-- Save Transaction Modal -->
-    <form wire:submit.prevent="save">
-        <x-modal.dialog wire:model.defer="showEditModal">
-            <x-slot name="title">Edit List Data Dokumen</x-slot>
-
-            <x-slot name="content">
-
-                <x-input.group for="seri" label="Seri" :error="$errors->first('editing.seri')">
-                    <x-input.text wire:model="editing.seri" id="seri" placeholder="Seri" />
-                </x-input.group>
-
-                <x-input.group for="jenis_dokumen" label="Jenis item" :error="$errors->first('editing.jenis_dokumen')">
-                    <x-input.select wire:model="editing.jenis_dokumen" id="jenis_dokumen-status">
-                        <option value="">Pilih Jenis item...</option>
-                        <option value="03001 - Izin Prinsip Pendirian Kawasan Berikat">03001 - Izin Prinsip Pendirian Kawasan Berikat</option>
-                        <option value="380- INVOICE">380- INVOICE</option>
-                    </x-input.select>
-                </x-input.group>
-
-                <x-input.group for="nomor_dokumen" label="Nomor item" :error="$errors->first('editing.nomor_dokumen')">
-                    <x-input.text wire:model="editing.nomor_dokumen" id="nomor_dokumen" placeholder="Nomor Dokumen" />
-                </x-input.group>
-                
-                <x-input.group for="tanggal_dokumen" label="Tanggal item" :error="$errors->first('editing.tanggal_dokumen')">
-                    <x-input.date wire:model="editing.tanggal_dokumen" id="tanggal_dokumen" placeholder="Tanggal Dokumen" />
-                </x-input.group>
-                
-                <x-input.group label="Upload" for="photo" :error="$errors->first('upload')">
-                    <x-input.file-upload accept="application/pdf" wire:model="upload" id="photo">
-                        @if ($upload)
-                            {{ $upload->getClientOriginalName()}}
-                        @endif
-                    </x-input.file-upload>
-                </x-input.group>
-
-            </x-slot>
-
-            <x-slot name="footer">
-                <x-button.secondary wire:click="$set('showEditModal', false)">Cancel</x-button.secondary>
-
-                <x-button.primary type="submit">Save</x-button.primary>
-            </x-slot>
-        </x-modal.dialog>
-    </form>
+    
 </div>

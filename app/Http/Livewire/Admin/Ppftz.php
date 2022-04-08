@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\ppftz as ppftzmodel;
@@ -85,40 +85,37 @@ class Ppftz extends Component
         $this->showEditModal = true;
     }
 
+    public function lihat(ppftzmodel $pabean)
+    {
+        return redirect()->route('edit-pabean', $pabean->nomor_aju_pabean);
+    }
+
+
     public function edit(ppftzmodel $pabean)
     {
         $this->useCachedRows();
-
-        $this->lagi_edit = $pabean->nomor_aju_pabean;
-        
         if ($this->editing->isNot($pabean)) $this->editing = $pabean;
-
         $this->showEditModal = true;
     }
 
     public function save()
     {
-        
-        $this->validate();
-        
-        if ($this->lagi_edit != ''){
-            $this->editing->save();
-            return redirect()->route('edit-pabean', $this->lagi_edit);
-        } else {
-            $no_aju = random_int(100000000, 999999999);
+        $this->editing->fill([
+            'status' => 'Disetujui',
+        ]);
 
-            $this->editing->fill([
-                'users_id' => Auth::id(),
-                'nomor_aju_pabean' => $no_aju,
-                'status' => 'Diajukan',
-            ]);
+        $this->editing->save();
+        $this->notify('Data Berhasil Disetujui');
+        $this->showEditModal = false;
+    }
 
-            $this->editing->save();
-
-        };
+    public function rejected($id)
+    {
+        $items = ppftzmodel::findorFail($id);
+        $items->update(array('status' => 'Ditolak'));
         
-        $this->lagi_edit = '';
-        return redirect()->route('edit-pabean', $no_aju);
+        $this->notify('Data berhasil ditolak');
+        $this->showEditModal = false;
     }
 
     public function resetFilters() { $this->reset('filters'); }
@@ -146,8 +143,8 @@ class Ppftz extends Component
 
     public function render()
     {
-        return view('livewire.ppftz', [
+        return view('livewire.admin.ppftz', [
             'items' => $this->rows,
-        ]);
+        ])->layout('layouts.admin');;
     }
 }

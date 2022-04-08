@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
-use App\Models\DataPeti as DataPetiModel;
+use App\Models\DataDokumen as DataDokumenModel;
 use Illuminate\Support\Carbon;
 use App\Http\Livewire\DataTable\WithSorting;
 use App\Http\Livewire\DataTable\WithCachedRows;
@@ -11,7 +11,7 @@ use App\Http\Livewire\DataTable\WithBulkActions;
 use App\Http\Livewire\DataTable\WithPerPagePagination;
 use Livewire\WithFileUploads;
 
-class DataPeti extends Component
+class DataDokumen extends Component
 {
     use WithPerPagePagination, WithSorting, WithBulkActions, WithCachedRows, WithFileUploads;
 
@@ -20,9 +20,11 @@ class DataPeti extends Component
     public $showFilters = false;
     public $filters = [
         'search' => '',
+        'nomor_pengajuan_dokumen' => '',
     ];
-    
-    public DataPetiModel $editing;
+
+    public $users_id;
+    public DataDokumenModel $editing;
     public $upload;
     public $nomor;
 
@@ -31,13 +33,14 @@ class DataPeti extends Component
     protected $listeners = ['refreshTransactions' => '$refresh'];
 
     public function rules() { return [
-        'editing.nomor' => 'required',
-        'editing.tipe' => 'required',
-        'editing.ukuran' => 'required',
+        'editing.seri' => 'required',
+        'editing.jenis_dokumen' => 'required',
+        'editing.nomor_dokumen' => 'required',
+        'editing.tanggal_dokumen' => 'required',
     ]; }
 
-    public function mount($nomor_aju_pabean) { 
-        $this->nomor = $nomor_aju_pabean;
+    public function mount($nomor_aju_pabean) {
+        $this->nomor= $nomor_aju_pabean;
         $this->editing = $this->makeBlankTransaction();
     }
     public function updatedFilters() { $this->resetPage(); }
@@ -46,7 +49,7 @@ class DataPeti extends Component
     {
         return response()->streamDownload(function () {
             echo $this->selectedRowsQuery->toCsv();
-        }, 'izin_impor.csv');
+        }, 'data_dokumen_pabean.csv');
     }
 
     public function deleteSelected()
@@ -62,7 +65,7 @@ class DataPeti extends Component
 
     public function makeBlankTransaction()
     {
-        return DataPetiModel::make(['date' => now(), 'status' => 'success']);
+        return DataDokumenModel::make(['date' => now(), 'status' => 'success']);
     }
 
     public function toggleShowFilters()
@@ -72,45 +75,12 @@ class DataPeti extends Component
         $this->showFilters = ! $this->showFilters;
     }
 
-    public function create()
-    {
-        $this->useCachedRows();
-
-        if ($this->editing->getKey()) $this->editing = $this->makeBlankTransaction();
-
-        $this->showEditModal = true;
-    }
-
-    public function edit(DataPetiModel $transaction)
-    {
-        $this->useCachedRows();
-
-        if ($this->editing->isNot($transaction)) $this->editing = $transaction;
-
-        $this->showEditModal = true;
-    }
-
-    public function save()
-    {
-        $this->validate();
-
-        $this->editing->fill([
-            'nomor_pengajuan_dokumen' => $this->filters['nomor_pengajuan_dokumen'],
-        ]);
-
-        $this->editing->save();
-        
-        $this->notify('Data Tersimpan');
-
-        $this->showEditModal = false;
-    }
-
-    public function resetFilters() { $this->reset('filters'); }
 
     public function getRowsQueryProperty()
     {
-        $query = DataPetiModel::query()
-            ->when($this->filters['search'], fn($query, $search) => $query->where('seri', $search ))
+        $query = DataDokumenModel::query()
+            ->when($this->users_id, fn($query, $users_id) => $query->where('users_id', $users_id))
+            ->when($this->filters['search'], fn($query, $search) => $query->where('seri', 'like', '%'.$search.'%'))
             ->when($this->nomor, fn($query, $nomor_pengajuan_dokumen) => $query->where('nomor_pengajuan_dokumen', $nomor_pengajuan_dokumen));
 
         return $this->applySorting($query);
@@ -125,7 +95,7 @@ class DataPeti extends Component
 
     public function render()
     {
-        return view('livewire.data-peti', [
+        return view('livewire.admin.data-dokumen', [
             'items' => $this->rows,
             'nomor_aju_pabean' => $this->nomor,
         ]);

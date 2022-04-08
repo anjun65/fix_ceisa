@@ -30,8 +30,6 @@
                 </x-dropdown>
 
                 <livewire:import.ppftz />
-
-                <x-button.primary wire:click="create"><x-icon.plus/> Baru</x-button.primary>
             </div>
         </div>
 
@@ -133,6 +131,10 @@
                         <x-table.cell>
                             <x-button.link wire:click="edit({{ $item->id }})">Edit</x-button.link>
                         </x-table.cell>
+
+                        <x-table.cell>
+                            <x-button.link wire:click="lihat({{ $item->id }})">Lihat</x-button.link>
+                        </x-table.cell>
                     </x-table.row>
                     @empty
                     <x-table.row>
@@ -178,7 +180,7 @@
             <x-slot name="content">
 
                 <x-input.group for="pengajuan_sebagai" label="Pengajuan Sebagai ?" :error="$errors->first('editing.pengajuan_sebagai')">
-                    <x-input.select wire:model="editing.pengajuan_sebagai" id="pengajuan_sebagai">
+                    <x-input.select disabled wire:model="editing.pengajuan_sebagai" id="pengajuan_sebagai">
                         <option value="" selected>Belum Memilih</option>
                         <option value="Pengusaha">Pengusaha</option>
                         <option value="PPJK">PPJK</option>
@@ -186,7 +188,7 @@
                 </x-input.group>
 
                 <x-input.group for="kantor_aju_pabean" label="Diajukan di Kantor:" :error="$errors->first('editing.kantor_aju_pabean')">
-                    <x-input.select wire:model="editing.kantor_aju_pabean" id="kantor_aju_pabean">
+                    <x-input.select disabled wire:model="editing.kantor_aju_pabean" id="kantor_aju_pabean">
                         <option value="" selected>Belum Memilih</option>
                         <option value="DIREKTORAT IKC">DIREKTORAT IKC</option>
                         <option value="KPPBC TMP B TANJUNG BALAI KARIMUN">KPPBC TMP B TANJUNG BALAI KARIMUN</option>
@@ -197,7 +199,7 @@
                 </x-input.group>
 
                 <x-input.group for="jenis_pemberitahuan" label="Jenis Pemberitahuan" :error="$errors->first('editing.jenis_pemberitahuan')">
-                    <x-input.select wire:model="editing.jenis_pemberitahuan" id="jenis_pemberitahuan">
+                    <x-input.select disabled wire:model="editing.jenis_pemberitahuan" id="jenis_pemberitahuan">
                         <option value="" selected>Belum Memilih</option>
                         <option value="Pemasukan">Pemasukan</option>
                         <option value="Pengeluaran">Pengeluaran</option>
@@ -205,7 +207,7 @@
                 </x-input.group>
 
                 <x-input.group for="jenis_pemberitahuan_lanjut" label="Jenis Masuk" :error="$errors->first('editing.jenis_pemberitahuan_lanjut')">
-                    <x-input.select wire:model="editing.jenis_pemberitahuan_lanjut" id="jenis_pemberitahuan_lanjut">
+                    <x-input.select disabled wire:model="editing.jenis_pemberitahuan_lanjut" id="jenis_pemberitahuan_lanjut">
                         <option value="" selected>Belum Memilih</option>
                         <option value="dari Luar Daerah Pabean">dari Luar Daerah Pabean</option>
                         <option value="dari FTZ lain">dari FTZ lain</option>
@@ -228,8 +230,10 @@
 
             <x-slot name="footer">
                 <x-button.secondary wire:click="$set('showEditModal', false)">Cancel</x-button.secondary>
-
-                <x-button.primary type="submit">Save</x-button.primary>
+                
+                <button type="button" wire:click="rejected({{ $item->id }})" class="bg-red-800 text-white py-2 px-4 border rounded-md text-sm leading-5 font-medium focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out border-gray-300 text-white active:bg-red-900 active:text-white hover:text-white">Reject</button>
+                
+                <x-button.primary type="submit">Approve</x-button.primary>
             </x-slot>
         </x-modal.dialog>
     </form>

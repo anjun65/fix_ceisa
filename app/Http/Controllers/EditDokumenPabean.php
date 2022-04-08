@@ -34,4 +34,15 @@ class EditDokumenPabean extends Controller
 
         return redirect()->back()->with('message', 'Berhasil disimpan');
     }
+
+    public function lihat($nomor_aju_pabean)
+    {   
+        $items = ppftz::where('nomor_aju_pabean', $nomor_aju_pabean)->first();
+
+        return view('pages.admin.edit-dokumen-pabean', [
+            'nomor_aju_pabean' => $nomor_aju_pabean,
+            'items' => $items,
+        ]);
+        
+    }
 }

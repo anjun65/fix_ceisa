@@ -24,6 +24,8 @@ class DataKemasan extends Component
         'search' => '',
         'nomor_pengajuan_dokumen' => '',
     ];
+
+    public $nomor;
     public DataKemasanModel $editing;
     public $upload;
 
@@ -38,7 +40,7 @@ class DataKemasan extends Component
     ]; }
 
     public function mount($nomor_aju_pabean) { 
-        $this->filters['nomor_pengajuan_dokumen'] = $nomor_aju_pabean;
+        $this->nomor = $nomor_aju_pabean;
         $this->editing = $this->makeBlankTransaction();
     }
     public function updatedFilters() { $this->resetPage(); }
@@ -114,7 +116,7 @@ class DataKemasan extends Component
     {
         $query = DataKemasanModel::query()
             ->when($this->filters['search'], fn($query, $search) => $query->where('nomor', $search ))
-            ->when($this->filters['nomor_pengajuan_dokumen'], fn($query, $nomor_pengajuan_dokumen) => $query->where('nomor_pengajuan_dokumen', $nomor_pengajuan_dokumen));
+            ->when($this->nomor, fn($query, $nomor_pengajuan_dokumen) => $query->where('nomor_pengajuan_dokumen', $nomor_pengajuan_dokumen));
 
         return $this->applySorting($query);
     }
@@ -130,7 +132,7 @@ class DataKemasan extends Component
     {
         return view('livewire.data-kemasan', [
             'items' => $this->rows,
-            'nomor_aju_pabean' => $this->filters['nomor_pengajuan_dokumen'],
+            'nomor_aju_pabean' => $this->nomor,
         ]);
     }
 }

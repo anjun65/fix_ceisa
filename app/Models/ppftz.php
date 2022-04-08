@@ -12,6 +12,9 @@ class ppftz extends Model
     protected $fillable = [
         "users_id",
         "nomor_aju_pabean",
+        "pengajuan_sebagai",
+        "jenis_pemberitahuan",
+        "jenis_pemberitahuan_lanjut",
         "kategori_pemberitahuan",
         "kantor_aju_pabean",
         "kategori_pemasukan",
@@ -51,6 +54,7 @@ class ppftz extends Model
         "jumlah_peti_kemas",
         "jumlah_jenis_barang",
         "tempat_penimbunan",
+        "status",
     ];
 
     const STATUSES = [
