@@ -11,9 +11,19 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::factory()->create([
-            'email' => 'dev@surge.com',
+            'email' => 'hajrul@polibatam.ac.id',
+            'nomorInduk' => '4311501034',
+            'username' => 'hajrul',
+            'name' => 'Hajrul Khaira',
+            'roles' => 'ADMIN',
         ]);
 
-        Transaction::factory()->count(250)->create();
+        $this->call([
+            CountrySeeder::class,
+            CurrencySeeder::class,
+            DocumentCodes::class,
+            ListPelabuhan::class,
+            CaraPengangkutan::class,
+        ]);
     }
 }

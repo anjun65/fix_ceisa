@@ -196,33 +196,43 @@
                     </x-input.select>
                 </x-input.group>
 
-                <x-input.group for="jenis_pemberitahuan" label="Jenis Pemberitahuan" :error="$errors->first('editing.jenis_pemberitahuan')">
-                    <x-input.select wire:model="editing.jenis_pemberitahuan" id="jenis_pemberitahuan">
-                        <option value="" selected>Belum Memilih</option>
-                        <option value="Pemasukan">Pemasukan</option>
-                        <option value="Pengeluaran">Pengeluaran</option>
-                    </x-input.select>
-                </x-input.group>
+                {{-- <div x-data="{ isPemasukan: false, isPengeluaran: false, }"> --}}
+                    <x-input.group for="jenis_pemberitahuan" label="Jenis Pemberitahuan" :error="$errors->first('editing.jenis_pemberitahuan')">
+                        <x-input.select wire:model="editing.jenis_pemberitahuan" id="jenis_pemberitahuan">
+                            <option value="" selected>Belum Memilih</option>
+                            <option x-data="{ isPemasukan: true }" value="Pemasukan">Pemasukan</option>
+                            <option value="Pengeluaran">Pengeluaran</option>
+                        </x-input.select>
+                    </x-input.group>
 
-                <x-input.group for="jenis_pemberitahuan_lanjut" label="Jenis Masuk" :error="$errors->first('editing.jenis_pemberitahuan_lanjut')">
-                    <x-input.select wire:model="editing.jenis_pemberitahuan_lanjut" id="jenis_pemberitahuan_lanjut">
-                        <option value="" selected>Belum Memilih</option>
-                        <option value="dari Luar Daerah Pabean">dari Luar Daerah Pabean</option>
-                        <option value="dari FTZ lain">dari FTZ lain</option>
-                        <option value="dari Tempat Penimbunan Berikat">dari Tempat Penimbunan Berikat</option>
-                        <option value="dari Tempat Lain Dalam Daerah Pabean">dari Tempat Lain Dalam Daerah Pabean</option>
-                    </x-input.select>
-                </x-input.group>
+                    {{-- <div x-show="isPemasukan"> --}}
+                        <x-input.group for="jenis_pemberitahuan_lanjut" label="Jenis Masuk" :error="$errors->first('editing.jenis_pemberitahuan_lanjut')">
+                            <x-input.select wire:model="editing.jenis_pemberitahuan_lanjut" id="jenis_pemberitahuan_lanjut">
+                                <option value="" selected>Belum Memilih</option>
+                                <option value="dari Luar Daerah Pabean">dari Luar Daerah Pabean</option>
+                                <option value="dari FTZ lain">dari FTZ lain</option>
+                                <option value="dari Tempat Penimbunan Berikat">dari Tempat Penimbunan Berikat</option>
+                                <option value="dari Tempat Lain Dalam Daerah Pabean">dari Tempat Lain Dalam Daerah Pabean</option>
+                            </x-input.select>
+                        </x-input.group>
+                    {{-- </div> --}}
 
-                {{-- <x-input.group for="jenis_pemberitahuan" label="Jenis Pemberitahuan" :error="$errors->first('editing.jenis_pemberitahuan')">
-                    <x-input.select wire:model="editing.jenis_pemberitahuan" id="jenis_pemberitahuan">
-                        <option value="" selected>Belum Memilih</option>
-                        <option value="ke Luar Daerah Pabean">ke Luar Daerah Pabean</option>
-                        <option value="ke Tempat Dalam Daerah Pabean">dari FTZ lain</option>
-                        <option value="ke FTZ lain">dari FTZ lain</option>
-                        <option value="ke Tempat Penimbunanan Berikat">ke Tempat Penimbunanan Berikat</option>
-                    </x-input.select>
-                </x-input.group> --}}
+                    {{-- <div x-show="isPengeluaran">
+                        <x-input.group for="jenis_pemberitahuan_lanjut" label="Jenis Keluar" :error="$errors->first('editing.jenis_pemberitahuan_lanjut')">
+                            <x-input.select wire:model="editing.jenis_pemberitahuan_lanjut" id="jenis_pemberitahuan_lanjut">
+                                <option value="" selected>Belum Memilih</option>
+                                <option value="ke Luar Daerah Pabean">ke Luar Daerah Pabean</option>
+                                <option value="ke Tempat Dalam Daerah Pabean">dari FTZ lain</option>
+                                <option value="ke FTZ lain">dari FTZ lain</option>
+                                <option value="ke Tempat Penimbunanan Berikat">ke Tempat Penimbunanan Berikat</option>
+                            </x-input.select>
+                        </x-input.group>
+                    </div> --}}
+
+                {{-- </div> --}}
+               
+
+                
 
             </x-slot>
 

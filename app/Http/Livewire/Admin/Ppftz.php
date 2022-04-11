@@ -27,7 +27,6 @@ class Ppftz extends Component
     ];
     public ppftzmodel $editing;
     public $lagi_edit = '';
-    public $users_id;
 
     protected $queryString = ['sorts'];
 
@@ -41,7 +40,6 @@ class Ppftz extends Component
     ]; }
 
     public function mount() { 
-        $this->users_id = Auth::id();
         $this->editing = $this->makeBlankTransaction(); 
     }
     public function updatedFilters() { $this->resetPage(); }
@@ -123,7 +121,6 @@ class Ppftz extends Component
     public function getRowsQueryProperty()
     {
         $query = ppftzmodel::query()
-            ->when($this->users_id, fn($query, $users_id) => $query->where('users_id', $users_id))
             ->when($this->filters['nomor_aju_pabean'], fn($query, $nomor_aju_pabean) => $query->where('nomor_aju_pabean', 'like', '%'.$nomor_aju_pabean.'%'))
             ->when($this->filters['pengirim'], fn($query, $nama_pengirim) => $query->where('nama_pengirim', 'like', '%'.$nama_pengirim.'%'))
             ->when($this->filters['penerima'], fn($query, $nama_penerima) => $query->where('nama_penerima', 'like', '%'.$nama_penerima.'%'))

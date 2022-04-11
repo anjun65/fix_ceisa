@@ -11,7 +11,7 @@ use App\Http\Livewire\DataTable\WithBulkActions;
 use App\Http\Livewire\DataTable\WithPerPagePagination;
 use Illuminate\Support\Facades\Auth;
 
-class Ppftz extends Component
+class DokumenPPJK extends Component
 {
     use WithPerPagePagination, WithSorting, WithBulkActions, WithCachedRows;
 
@@ -28,8 +28,7 @@ class Ppftz extends Component
     public ppftzmodel $editing;
     public $lagi_edit = '';
     public $users_id;
-    // public $isPemasukan = false;
-    // public $isPengeluaran = false;
+    public $pengajuan_sebagai;
 
     protected $queryString = ['sorts'];
 
@@ -44,6 +43,7 @@ class Ppftz extends Component
 
     public function mount() { 
         $this->users_id = Auth::id();
+        $this->pengajuan_sebagai = 'PPJK';
         $this->editing = $this->makeBlankTransaction(); 
     }
     public function updatedFilters() { $this->resetPage(); }
@@ -129,6 +129,7 @@ class Ppftz extends Component
     {
         $query = ppftzmodel::query()
             ->when($this->users_id, fn($query, $users_id) => $query->where('users_id', $users_id))
+            ->when($this->pengajuan_sebagai, fn($query, $pengajuan_sebagai) => $query->where('pengajuan_sebagai', 'PPJK'))
             ->when($this->filters['nomor_aju_pabean'], fn($query, $nomor_aju_pabean) => $query->where('nomor_aju_pabean', 'like', '%'.$nomor_aju_pabean.'%'))
             ->when($this->filters['pengirim'], fn($query, $nama_pengirim) => $query->where('nama_pengirim', 'like', '%'.$nama_pengirim.'%'))
             ->when($this->filters['penerima'], fn($query, $nama_penerima) => $query->where('nama_penerima', 'like', '%'.$nama_penerima.'%'))

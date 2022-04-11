@@ -1,4 +1,27 @@
-<x-layouts.base>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+
+    <!-- Tailwind UI -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/ui@latest/dist/tailwind-ui.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&display=swap" rel="stylesheet">
+
+    <!-- Alpine -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js"></script>
+    <script src="https://unpkg.com/flowbite@1.4.1/dist/datepicker.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    @livewireStyles
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@1.2.3/dist/trix.css">
+</head>
+<body class="antialiased font-sans bg-gray-200">
     <div class="h-screen flex overflow-hidden bg-cool-gray-100" x-data="{ sidebarOpen: false }" @keydown.window.escape="sidebarOpen = false">
         <!-- Off-canvas menu for mobile -->
         <div x-show="sidebarOpen" class="md:hidden" style="display: none;">
@@ -24,6 +47,13 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10M9 21h6"></path>
                                 </svg>
                                 Home
+                            </a>
+
+                            <a href="/dashboard" class="group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-gray-900 focus:outline-none focus:bg-gray-700 transition ease-in-out duration-150">
+                                <svg class="mr-3 h-6 w-6 text-gray-900 group-focus:text-gray-300 transition ease-in-out duration-150" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                Dashboard
                             </a>
 
                             <a href="/ppftz" class="group flex items-center px-2 py-2 text-base leading-6 font-medium rounded-md text-white bg-gray-900 focus:outline-none focus:bg-gray-700 transition ease-in-out duration-150">
@@ -92,6 +122,13 @@
                             </svg>
                             Home
                         </a>
+
+                        <a href="/dashboard" class="group flex items-center px-2 py-2 text-sm leading-5 font-medium text-gray-900 rounded-md bg-white focus:outline-none focus:bg-gray-700 focus:text-white transition ease-in-out duration-150">
+                                <svg class="mr-3 h-6 w-6 text-gray-900 group-focus:text-gray-300 transition ease-in-out duration-150" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                Dashboard
+                            </a>
 
                         <a href="/ppftz" class="group flex items-center px-2 py-2 text-sm leading-5 font-medium text-gray-900 rounded-md bg-white focus:outline-none focus:bg-gray-700 focus:text-white transition ease-in-out duration-150">
                             <svg class="mr-3 h-6 w-6 text-gray-900 group-focus:text-gray-300 transition ease-in-out duration-150" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -230,19 +267,36 @@
                                                             </x-input.select>
                                                         </div>
 
-                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
-                                                            <label for="kategori_pemasukan" class="block text-sm font-medium text-gray-700 mb-4">Kategori Pemasukan</label>
-                                                            <x-input.select  name="kategori_pemasukan" id="kategori_pemasukan">
-                                                                @isset($items->kategori_pemasukan)
-                                                                    <option value="{{ $items->kategori_pemasukan }}" selected>{{ $items->kategori_pemasukan }}</option>
-                                                                @else
-                                                                    <option value="" selected>Belum Memilih</option>
-                                                                @endisset
-                                                                <option value="1 - Pemasukan Biasa">1 - Pemasukan Biasa</option>
-                                                                <option value="2 - Pemasukan Sementara ke Kawasan Bebas">2 - Pemasukan Sementara ke Kawasan Bebas</option>
-                                                                <option value="3 - Pemasukan Kembali ke Kawasan Bebas">3 - Pemasukan Kembali ke Kawasan Bebas</option>
-                                                            </x-input.select>
-                                                        </div>
+                                                        @if ($items->jenis_pemberitahuan == "Pengeluaran")
+                                                            <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                                <label for="kategori_pemasukan" class="block text-sm font-medium text-gray-700 mb-4">Kategori Pengeluaran</label>
+                                                                <x-input.select  name="kategori_pemasukan" id="kategori_pemasukan">
+                                                                    @isset($items->kategori_pemasukan)
+                                                                        <option value="{{ $items->kategori_pemasukan }}" selected>{{ $items->kategori_pemasukan }}</option>
+                                                                    @else
+                                                                        <option value="" selected>Belum Memilih</option>
+                                                                    @endisset
+                                                                    <option value="1 - Pengeluaran Biasa">1 - Pengeluaran Biasa</option>
+                                                                    <option value="2 - Pengeluaran Sementara ke Kawasan Bebas">2 - Pengeluaran Sementara ke Kawasan Bebas</option>
+                                                                </x-input.select>
+                                                            </div>
+                                                        @else
+                                                            <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                                <label for="kategori_pemasukan" class="block text-sm font-medium text-gray-700 mb-4">Kategori Pemasukan</label>
+                                                                <x-input.select  name="kategori_pemasukan" id="kategori_pemasukan">
+                                                                    @isset($items->kategori_pemasukan)
+                                                                        <option value="{{ $items->kategori_pemasukan }}" selected>{{ $items->kategori_pemasukan }}</option>
+                                                                    @else
+                                                                        <option value="" selected>Belum Memilih</option>
+                                                                    @endisset
+                                                                    <option value="1 - Pemasukan Biasa">1 - Pemasukan Biasa</option>
+                                                                    <option value="2 - Pemasukan Sementara ke Kawasan Bebas">2 - Pemasukan Sementara ke Kawasan Bebas</option>
+                                                                    <option value="3 - Pemasukan Kembali ke Kawasan Bebas">3 - Pemasukan Kembali ke Kawasan Bebas</option>
+                                                                </x-input.select>
+                                                            </div>
+                                                        @endif
+                                                        
+                                                        
 
                                                         <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
                                                             <label for="tujuan_pemasukan" class="block text-sm font-medium text-gray-700 mb-4">Tujuan Pemasukan</label>
@@ -374,6 +428,7 @@
 
                                                     </div>
 
+                                                    @if ($items->pengajuan_sebagai == "PPJK")
                                                     <div class="flex flex-row justify-between uppercase font-bold text-blue-dark border-b p-6">
                                                         <p>PPJK<p>
                                                         <div class="cursor-pointer text-grey-dark hover:text-blue duration-4"><i class="fas fa-ellipsis-v"></i></div>
@@ -395,6 +450,7 @@
                                                             <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="alamat_ppjk"  id="alamat_ppjk" @isset($items->alamat_ppjk) value="{{ $items->alamat_ppjk }}" @endisset placeholder="Alamat PPJK" />
                                                         </div>
                                                     </div>
+                                                    @endif
 
                                                     <div class="flex flex-row justify-between uppercase font-bold text-blue-dark border-b p-6">
                                                         <p>Data Transaksi Perdagangan<p>
@@ -421,7 +477,14 @@
 
                                                         <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
                                                             <label for="tanggal_bc11" class="block text-sm font-medium text-gray-700 mb-4">Tanggal Bc11</label>
-                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="tanggal_bc11" id="tanggal_bc11" @isset($items->tanggal_bc11) value="{{ $items->tanggal_bc11 }}" @endisset placeholder="Tanggal BC11" />
+                                                            
+                                                            <div class="relative">
+                                                                <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                                                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                                                                </div>
+                                                                
+                                                                <input datepicker datepicker-buttons datepicker-format="dd-mm-yyyy" autocomplete="off" type="text" name="tanggal_bc11" @isset($items->tanggal_bc11) value="{{ $items->tanggal_bc11 }}" @endisset class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Pilih tanggal">
+                                                            </div>
                                                         </div>
 
                                                         <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
@@ -448,7 +511,16 @@
                                                     <div class="grid grid-cols-4 gap-2">
                                                         <div class="p-6 text-grey-darker text-justify flex flex-col">
                                                             <label for="cara_angkut" class="block text-sm font-medium text-gray-700 mb-4">Cara Angkut</label>
-                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="cara_angkut" id="cara_angkut" @isset($items->cara_angkut) value="{{ $items->cara_angkut }}" @endisset placeholder="Cara Angkut" />
+                                                            <x-input.select class="pelabuhan_tujuan" name="pelabuhan_tujuan" id="pelabuhan_tujuan">
+                                                                @isset($items->pelabuhan_tujuan)
+                                                                    <option value="{{ $items->pelabuhan_tujuan }}" selected>{{ $items->pelabuhan_tujuan }}</option>
+                                                                @else
+                                                                    <option value="" selected>Belum Memilih</option>
+                                                                @endisset
+                                                                @foreach ($cara_angkuts as $cara_angkut)
+                                                                    <option value="{{ $cara_angkut->cara}}">{{ $cara_angkut->cara }}</option>
+                                                                @endforeach
+                                                            </x-input.select>
                                                         </div>
 
                                                         <div class="p-6 text-grey-darker text-justify flex flex-col">
@@ -472,22 +544,52 @@
                                                             <div class="flex flex-row justify-between uppercase font-bold text-blue-dark border-b p-6">
                                                                 <p>Data Pelabuhan Muat dan Bongkar<p>
                                                                 <div class="cursor-pointer text-grey-dark hover:text-blue duration-4"><i class="fas fa-ellipsis-v"></i></div>
+                                                            
                                                             </div>
+
+                                                            
 
                                                             <div class="grid grid-cols-1 gap-2">
                                                                 <div class="px-6 pt-6  text-grey-darker text-justify flex flex-col">
                                                                     <label for="pelabuhan_muat" class="block text-sm font-medium text-gray-700 mb-4">Pelabuhan Muat</label>
-                                                                    <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="pelabuhan_muat" id="pelabuhan_muat"  @isset($items->pelabuhan_muat) value="{{ $items->pelabuhan_muat }}" @endisset placeholder="Pelabuhan Muat" />
+                                                                    <x-input.select class="pelabuhan_muat" name="pelabuhan_muat" id="pelabuhan_muat">
+                                                                        @isset($items->pelabuhan_muat)
+                                                                            <option value="{{ $items->pelabuhan_muat }}" selected>{{ $items->pelabuhan_muat }}</option>
+                                                                        @else
+                                                                            <option value="" selected>Belum Memilih</option>
+                                                                        @endisset
+                                                                        @foreach ($pelabuhans as $pelabuhan)
+                                                                            <option value="{{ $pelabuhan->code }}">{{ $pelabuhan->name }}</option>
+                                                                        @endforeach
+                                                                    </x-input.select>
                                                                 </div>
-
+                                                                
                                                                 <div class="px-6 pt-6  text-grey-darker text-justify flex flex-col">
                                                                     <label for="pelabuhan_tujuan" class="block text-sm font-medium text-gray-700 mb-4">Pelabuhan Tujuan</label>
-                                                                    <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="pelabuhan_tujuan" id="pelabuhan_tujuan"  @isset($items->pelabuhan_tujuan) value="{{ $items->pelabuhan_tujuan }}" @endisset placeholder="Pelabuhan Tujuan" />
+                                                                    <x-input.select class="pelabuhan_tujuan" name="pelabuhan_tujuan" id="pelabuhan_tujuan">
+                                                                        @isset($items->pelabuhan_tujuan)
+                                                                            <option value="{{ $items->pelabuhan_tujuan }}" selected>{{ $items->pelabuhan_tujuan }}</option>
+                                                                        @else
+                                                                            <option value="" selected>Belum Memilih</option>
+                                                                        @endisset
+                                                                        @foreach ($pelabuhans as $pelabuhan)
+                                                                            <option value="{{ $pelabuhan->code }}">{{ $pelabuhan->name }}</option>
+                                                                        @endforeach
+                                                                    </x-input.select>
                                                                 </div>
 
                                                                 <div class="px-6 pt-6  text-grey-darker text-justify flex flex-col">
                                                                     <label for="pelabuhan_transit" class="block text-sm font-medium text-gray-700 mb-4">Pelabuhan Transit</label>
-                                                                    <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="pelabuhan_transit" id="pelabuhan_transit" @isset($items->pelabuhan_transit) value="{{ $items->pelabuhan_transit }}" @endisset placeholder="Pelabuhan Transit" />
+                                                                    <x-input.select class="pelabuhan_transit" name="pelabuhan_tujuan" id="pelabuhan_tujuan">
+                                                                        @isset($items->pelabuhan_transit)
+                                                                            <option value="{{ $items->pelabuhan_transit }}" selected>{{ $items->pelabuhan_transit }}</option>
+                                                                        @else
+                                                                            <option value="" selected>Belum Memilih</option>
+                                                                        @endisset
+                                                                        @foreach ($pelabuhans as $pelabuhan)
+                                                                            <option value="{{ $pelabuhan->code }}">{{ $pelabuhan->name }}</option>
+                                                                        @endforeach
+                                                                    </x-input.select>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -529,7 +631,8 @@
                                                                         <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
                                                                             <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
                                                                         </div>
-                                                                        <input datepicker datepicker-buttons type="text" name="perkiraan_tanggal_pemasukan" @isset($items->perkiraan_tanggal_pemasukan) value="{{ $items->perkiraan_tanggal_pemasukan }}" @endisset class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
+                                                                        
+                                                                        <input datepicker datepicker-buttons datepicker-format="dd-mm-yyyy" autocomplete="off" type="text" name="perkiraan_tanggal_pemasukan" @isset($items->perkiraan_tanggal_pemasukan) value="{{ $items->perkiraan_tanggal_pemasukan }}" @endisset class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Pilih tanggal">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -620,7 +723,20 @@
                 </div>
             </main>
         </div>
-
-        <x-notification />
     </div>
-</x-layouts.base>
+
+    <script>
+    $(document).ready(function() {
+        $('.pelabuhan_muat').select2();
+        
+        $('.pelabuhan_tujuan').select2();
+        
+        $('.pelabuhan_transit').select2();
+    });
+</script>
+    <script src="https://unpkg.com/moment"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+    <script src="https://unpkg.com/trix@1.2.3/dist/trix.js"></script>
+    <script src="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.bundle.js"></script>
+</body>
+</html>

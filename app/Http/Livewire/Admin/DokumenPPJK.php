@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
 use App\Models\ppftz as ppftzmodel;
@@ -11,7 +11,7 @@ use App\Http\Livewire\DataTable\WithBulkActions;
 use App\Http\Livewire\DataTable\WithPerPagePagination;
 use Illuminate\Support\Facades\Auth;
 
-class Ppftz extends Component
+class DokumenPPJK extends Component
 {
     use WithPerPagePagination, WithSorting, WithBulkActions, WithCachedRows;
 
@@ -28,8 +28,7 @@ class Ppftz extends Component
     public ppftzmodel $editing;
     public $lagi_edit = '';
     public $users_id;
-    // public $isPemasukan = false;
-    // public $isPengeluaran = false;
+    public $pengajuan_sebagai = 'PPJK';
 
     protected $queryString = ['sorts'];
 
@@ -43,7 +42,6 @@ class Ppftz extends Component
     ]; }
 
     public function mount() { 
-        $this->users_id = Auth::id();
         $this->editing = $this->makeBlankTransaction(); 
     }
     public function updatedFilters() { $this->resetPage(); }
@@ -87,40 +85,37 @@ class Ppftz extends Component
         $this->showEditModal = true;
     }
 
+    public function lihat(ppftzmodel $pabean)
+    {
+        return redirect()->route('edit-pabean', $pabean->nomor_aju_pabean);
+    }
+
+
     public function edit(ppftzmodel $pabean)
     {
         $this->useCachedRows();
-
-        $this->lagi_edit = $pabean->nomor_aju_pabean;
-        
         if ($this->editing->isNot($pabean)) $this->editing = $pabean;
-
         $this->showEditModal = true;
     }
 
     public function save()
     {
-        
-        $this->validate();
-        
-        if ($this->lagi_edit != ''){
-            $this->editing->save();
-            return redirect()->route('edit-pabean', $this->lagi_edit);
-        } else {
-            $no_aju = random_int(100000000, 999999999);
+        $this->editing->fill([
+            'status' => 'Disetujui',
+        ]);
 
-            $this->editing->fill([
-                'users_id' => Auth::id(),
-                'nomor_aju_pabean' => $no_aju,
-                'status' => 'Diajukan',
-            ]);
+        $this->editing->save();
+        $this->notify('Data Berhasil Disetujui');
+        $this->showEditModal = false;
+    }
 
-            $this->editing->save();
-
-        };
+    public function rejected($id)
+    {
+        $items = ppftzmodel::findorFail($id);
+        $items->update(array('status' => 'Ditolak'));
         
-        $this->lagi_edit = '';
-        return redirect()->route('edit-pabean', $no_aju);
+        $this->notify('Data berhasil ditolak');
+        $this->showEditModal = false;
     }
 
     public function resetFilters() { $this->reset('filters'); }
@@ -128,7 +123,7 @@ class Ppftz extends Component
     public function getRowsQueryProperty()
     {
         $query = ppftzmodel::query()
-            ->when($this->users_id, fn($query, $users_id) => $query->where('users_id', $users_id))
+            ->when($this->pengajuan_sebagai, fn($query, $pengajuan_sebagai) => $query->where('pengajuan_sebagai', 'PPJK'))
             ->when($this->filters['nomor_aju_pabean'], fn($query, $nomor_aju_pabean) => $query->where('nomor_aju_pabean', 'like', '%'.$nomor_aju_pabean.'%'))
             ->when($this->filters['pengirim'], fn($query, $nama_pengirim) => $query->where('nama_pengirim', 'like', '%'.$nama_pengirim.'%'))
             ->when($this->filters['penerima'], fn($query, $nama_penerima) => $query->where('nama_penerima', 'like', '%'.$nama_penerima.'%'))
@@ -148,8 +143,8 @@ class Ppftz extends Component
 
     public function render()
     {
-        return view('livewire.ppftz', [
+        return view('livewire.admin.ppftz', [
             'items' => $this->rows,
-        ]);
+        ])->layout('layouts.admin');;
     }
 }

@@ -17,8 +17,8 @@ class CreatePpftzsTable extends Migration
             $table->id();
             $table->integer("users_id");
             $table->string("pengajuan_sebagai");
-            $table->string("jenis_pemberitahuan");
-            $table->string("jenis_pemberitahuan_lanjut");
+            $table->string("jenis_pemberitahuan")->nullable();
+            $table->string("jenis_pemberitahuan_lanjut")->nullable();
             $table->string("nomor_aju_pabean");
             $table->string("kategori_pemberitahuan")->nullable();
             $table->string("kantor_aju_pabean")->nullable();

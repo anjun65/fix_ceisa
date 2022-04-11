@@ -6,6 +6,7 @@ use App\Http\Livewire\Auth\Register;
 
 
 use App\Http\Livewire\Home;
+use App\Http\Controllers\DashboardController;
 use App\Http\Livewire\IzinImpor;
 use App\Http\Livewire\SuratKuasa;
 use App\Http\Livewire\Ppftz;
@@ -22,11 +23,14 @@ use App\Http\Livewire\Admin\SuratKuasa as SuratKuasaAdmin;
 use App\Http\Livewire\Admin\IzinImpor as IzinImporAdmin;
 use App\Http\Livewire\Admin\Config\Home as ConfigHome;
 use App\Http\Livewire\Admin\ManageUser;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 
 use App\Http\Livewire\Admin\DataBarang as DataBarangAdmin;
 use App\Http\Livewire\Admin\DataDokumen as DataDokumenAdmin;
 use App\Http\Livewire\Admin\DataPeti as DataPetiAdmin;
 use App\Http\Livewire\Admin\DataKemasan as DataKemasanAdmin;
+
+use App\Http\Livewire\Admin\DokumenPPJK as DokumenPPJKAdmin;
 
 use App\Http\Livewire\Admin\Config;
 use App\Http\Livewire\Admin\Config\ConfigCountry;
@@ -34,15 +38,18 @@ use App\Http\Livewire\Admin\Config\ConfigValuta;
 use App\Http\Livewire\Admin\Config\ConfigDocumentCode;
 use App\Http\Livewire\Admin\Config\ConfigCaraPengangkutan;
 
+use App\Http\Livewire\DokumenPPJK;
 /**
  * App Routes
  */
 Route::middleware('auth')->group(function () {
 
     Route::get('/', Home::class);
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/surat-kuasa', SuratKuasa::class);
     Route::get('/izin-impor', IzinImpor::class);
     Route::get('/ppftz', Ppftz::class);
+    Route::get('/dokumen-ppjk', DokumenPPJK::class);
 
     Route::get('/edit-dokumen-pabean/{nomor_aju_pabean}', [EditDokumenPabean::class, 'index'])->name('edit-pabean');
     Route::post('/edit-dokumen-pabean', [EditDokumenPabean::class, 'store'])->name('store-pabean');
@@ -50,7 +57,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit-data-dokumen/{nomor_aju_pabean}', DataDokumen::class)->name('edit-dokumen');
     Route::get('/edit-data-peti/{nomor_aju_pabean}', DataPeti::class)->name('edit-peti');
     Route::get('/edit-data-kemasan/{nomor_aju_pabean}', DataKemasan::class)->name('edit-kemasan');
+});
 
+Route::group(['middleware' => ['admin']], function () {
+    Route::get('/admin/dokumen-ppjk', DokumenPPJKAdmin::class);
     Route::get('/admin/ppftz', ppftzAdmin::class);
     Route::get('/admin/surat-kuasa', SuratKuasaAdmin::class);
     Route::get('/admin/izin-impor', IzinImporAdmin::class);
@@ -64,6 +74,7 @@ Route::middleware('auth')->group(function () {
     
 
     Route::get('/admin', Home::class);
+    Route::get('/admin/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
     Route::get('/admin/users', ManageUser::class);
 
     Route::get('/admin/config', Config::class);

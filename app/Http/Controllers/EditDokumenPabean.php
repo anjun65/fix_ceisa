@@ -2,19 +2,30 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Models\ppftz;
 use Illuminate\Support\Facades\Auth;
+use App\Models\ConfigCountry;
+use App\Models\ConfigPelabuhan;
+use App\Models\ConfigCaraPengangkutan;
 
 class EditDokumenPabean extends Controller
 {
     public function index($nomor_aju_pabean)
     {   
         $items = ppftz::where('nomor_aju_pabean', $nomor_aju_pabean)->first();
+        
+        $country = ConfigCountry::all();
+        $pelabuhan = ConfigPelabuhan::all();
+        $cara_angkuts = ConfigCaraPengangkutan::all();
 
         return view('pages.edit-dokumen-pabean', [
             'nomor_aju_pabean' => $nomor_aju_pabean,
             'items' => $items,
+            'countries' => $country,
+            'pelabuhans' => $pelabuhan,
+            'cara_angkuts' => $cara_angkuts,
         ]);
         
     }

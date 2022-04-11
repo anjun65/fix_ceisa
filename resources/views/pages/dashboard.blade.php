@@ -101,9 +101,9 @@
                         </a>
 
                         <a href="/dashboard" class="group flex items-center px-2 py-2 text-sm leading-5 font-medium text-gray-900 rounded-md bg-white focus:outline-none focus:bg-gray-700 focus:text-white transition ease-in-out duration-150">
-                            <svg class="mr-3 h-6 w-6 text-gray-900 group-focus:text-gray-300 transition ease-in-out duration-150" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
+                                <svg class="mr-3 h-6 w-6 text-gray-900 group-focus:text-gray-300 transition ease-in-out duration-150" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
                             Dashboard
                         </a>
 
@@ -150,7 +150,7 @@
 
                             <div class="ml-3">
                                 <p class="text-sm leading-5 font-medium text-gray-900">
-                                    {{ Auth::user()->name }}
+                                    Hajrul Khaira
                                 </p>
 
                                 <livewire:auth.logout/> 
@@ -172,7 +172,56 @@
 
             <main class="flex-1 relative z-0 overflow-y-auto pt-2 pb-6 focus:outline-none md:py-6" tabindex="0" x-data="" x-init="$el.focus()">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                    {{ $slot }}
+                    <div>
+                        <h1 class="text-2xl font-semibold text-gray-900 mb-4">Dashboard</h1>
+                            
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                                <h5 class="mb-2 text-base font-bold text-gray-900 dark:text-white">PPFTZ Diajukan</h5>
+                                <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">{{ $ppftz_diajukan }}</p>
+                            </div>
+
+                            <div class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                                <h5 class="mb-2 text-base font-bold text-gray-900 dark:text-white">PPFTZ Disetujui</h5>
+                                <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">{{ $ppftz_setuju }}</p>
+                            </div>
+
+                            <div class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                                <h5 class="mb-2 text-base font-bold text-gray-900 dark:text-white">PPFTZ Ditolak</h5>
+                                <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">{{ $ppftz_ditolak }}</p>
+                            </div>
+
+                            <div class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                                <h5 class="mb-2 text-base font-bold text-gray-900 dark:text-white">Surat Kuasa Diajukan</h5>
+                                <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">{{ $kuasa_diajukan }}</p>
+                            </div>
+
+                            <div class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                                <h5 class="mb-2 text-base font-bold text-gray-900 dark:text-white">Surat Kuasa Disetujui</h5>
+                                <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">{{ $kuasa_setuju }}</p>
+                            </div>
+
+                            <div class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                                <h5 class="mb-2 text-base font-bold text-gray-900 dark:text-white">Surat Kuasa Ditolak</h5>
+                                <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">{{ $kuasa_ditolak }}</p>
+                            </div>
+
+                            <div class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                                <h5 class="mb-2 text-base font-bold text-gray-900 dark:text-white">Izin Impor Diajukan</h5>
+                                <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">{{ $impor_diajukan }}</p>
+                            </div>
+
+                            <div class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                                <h5 class="mb-2 text-base font-bold text-gray-900 dark:text-white">Izin Impor Disetujui</h5>
+                                <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">{{ $impor_setuju }}</p>
+                            </div>
+
+                            <div class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                                <h5 class="mb-2 text-base font-bold text-gray-900 dark:text-white">Izin Impor Ditolak</h5>
+                                <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">{{ $impor_ditolak }}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
         </div>

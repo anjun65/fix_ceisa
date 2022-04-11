@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateConfigDocumentCodesTable extends Migration
+class CreateConfigPelabuhansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateConfigDocumentCodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('config_document_codes', function (Blueprint $table) {
+        Schema::create('config_pelabuhans', function (Blueprint $table) {
             $table->id();
+            $table->string('code');
 			$table->string('name');
             $table->timestamps();
         });
@@ -27,6 +28,6 @@ class CreateConfigDocumentCodesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('config_document_codes');
+        Schema::dropIfExists('config_pelabuhans');
     }
 }
