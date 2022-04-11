@@ -95,6 +95,6 @@ class DataPeti extends Component
         return view('livewire.admin.data-peti', [
             'items' => $this->rows,
             'nomor_aju_pabean' => $this->nomor,
-        ]);
+        ])->layout('layouts.admin');
     }
 }

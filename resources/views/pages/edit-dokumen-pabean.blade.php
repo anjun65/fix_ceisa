@@ -559,7 +559,7 @@
                                                                             <option value="" selected>Belum Memilih</option>
                                                                         @endisset
                                                                         @foreach ($pelabuhans as $pelabuhan)
-                                                                            <option value="{{ $pelabuhan->code }}">{{ $pelabuhan->name }}</option>
+                                                                            <option value="{{ $pelabuhan->code }} - {{ $pelabuhan->name }}">{{ $pelabuhan->code }} - {{ $pelabuhan->name }}</option>
                                                                         @endforeach
                                                                     </x-input.select>
                                                                 </div>
@@ -573,7 +573,7 @@
                                                                             <option value="" selected>Belum Memilih</option>
                                                                         @endisset
                                                                         @foreach ($pelabuhans as $pelabuhan)
-                                                                            <option value="{{ $pelabuhan->code }}">{{ $pelabuhan->name }}</option>
+                                                                            <option value="{{ $pelabuhan->code }} - {{ $pelabuhan->name }}">{{ $pelabuhan->code }} - {{ $pelabuhan->name }}</option>
                                                                         @endforeach
                                                                     </x-input.select>
                                                                 </div>
@@ -587,7 +587,7 @@
                                                                             <option value="" selected>Belum Memilih</option>
                                                                         @endisset
                                                                         @foreach ($pelabuhans as $pelabuhan)
-                                                                            <option value="{{ $pelabuhan->code }}">{{ $pelabuhan->name }}</option>
+                                                                            <option value="{{ $pelabuhan->code }} - {{ $pelabuhan->name }}">{{ $pelabuhan->code }} - {{ $pelabuhan->name }}</option>
                                                                         @endforeach
                                                                     </x-input.select>
                                                                 </div>
@@ -676,8 +676,8 @@
                                                                 <div class="p-6 text-grey-darker text-justify flex flex-col">
                                                                     <label for="tempat_penimbunan" class="block text-sm font-medium text-gray-700 mb-4">Tempat Penimbunan</label>
                                                                     <x-input.select name="tempat_penimbunan" id="tempat_penimbunan">
-                                                                        @isset($items->jenis_identitas_penerima)
-                                                                            <option value="{{ $items->jenis_identitas_penerima }}" selected>{{ $items->jenis_identitas_penerima }}</option>
+                                                                        @isset($items->tempat_penimbunan)
+                                                                            <option value="{{ $items->tempat_penimbunan }}" selected>{{ $items->tempat_penimbunan }}</option>
                                                                         @else
                                                                             <option value="" selected>Belum Memilih</option>
                                                                         @endisset

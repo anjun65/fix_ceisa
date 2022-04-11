@@ -133,6 +133,6 @@ class DataKemasan extends Component
         return view('livewire.admin.data-kemasan', [
             'items' => $this->rows,
             'nomor_aju_pabean' => $this->nomor,
-        ]);
+        ])->layout('layouts.admin');
     }
 }

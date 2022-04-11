@@ -155,7 +155,6 @@ class SuratKuasa extends Component
     }
     public function render()
     {
-        
         return view('livewire.admin.surat-kuasa', [
             'kuasas' => $this->rows,
         ])->layout('layouts.admin');

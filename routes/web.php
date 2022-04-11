@@ -75,7 +75,7 @@ Route::group(['middleware' => ['admin']], function () {
     
 
     Route::get('/admin', HomeAdmin::class);
-    Route::get('/admin/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
+    Route::get('/admin/dashboard', [AdminDashboard::class, 'index'])->name('admin-dashboard');
     Route::get('/admin/users', ManageUser::class);
 
     Route::get('/admin/config', Config::class);

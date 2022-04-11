@@ -145,6 +145,6 @@ class DokumenPPJK extends Component
     {
         return view('livewire.admin.ppftz', [
             'items' => $this->rows,
-        ])->layout('layouts.admin');;
+        ])->layout('layouts.admin');
     }
 }

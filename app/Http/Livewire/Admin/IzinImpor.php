@@ -157,7 +157,7 @@ class IzinImpor extends Component
     {
         return view('livewire.admin.izin-impor', [
             'izins' => $this->rows,
-        ])->layout('layouts.admin');;
+        ])->layout('layouts.admin');
         
     }
 }

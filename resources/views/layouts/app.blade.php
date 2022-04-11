@@ -73,6 +73,12 @@
                                     <p class="text-sm leading-5 font-medium text-gray-900">
                                         {{ Auth::user()->name }}
                                     </p>
+
+                                    @if (Auth::user()->roles == "ADMIN")
+                                        <a href="/admin" class="cursor-pointer text-xs leading-4 font-medium text-grey-500 hover:text-grey-200">
+                                            Go to Admin Dashboard
+                                        </a>
+                                    @endif
                                     </p>
                                     <livewire:auth.logout/> 
                                 </div>
@@ -155,7 +161,14 @@
                                     {{ Auth::user()->name }}
                                 </p>
 
+                                @if (Auth::user()->roles == "ADMIN")
+                                <a href="/admin" class="cursor-pointer text-xs leading-4 font-medium text-grey-500 hover:text-grey-200">
+                                    Go to Admin Dashboard
+                                </a>
+                                @endif
                                 <livewire:auth.logout/> 
+
+                                
                             </div>
                         </div>
                     </div>

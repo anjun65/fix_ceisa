@@ -98,6 +98,6 @@ class DataDokumen extends Component
         return view('livewire.admin.data-dokumen', [
             'items' => $this->rows,
             'nomor_aju_pabean' => $this->nomor,
-        ]);
+        ])->layout('layouts.admin');
     }
 }
