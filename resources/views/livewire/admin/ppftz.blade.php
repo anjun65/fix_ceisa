@@ -231,8 +231,9 @@
             <x-slot name="footer">
                 <x-button.secondary wire:click="$set('showEditModal', false)">Cancel</x-button.secondary>
                 
-                <button type="button" wire:click="rejected({{ $item->id }})" class="bg-red-800 text-white py-2 px-4 border rounded-md text-sm leading-5 font-medium focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out border-gray-300 text-white active:bg-red-900 active:text-white hover:text-white">Reject</button>
-                
+                @if(App\Models\ppftz::count() >= 1)
+                    <button type="button" wire:click="rejected({{ $item->id }})" class="bg-red-800 text-white py-2 px-4 border rounded-md text-sm leading-5 font-medium focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out border-gray-300 text-white active:bg-red-900 active:text-white hover:text-white">Reject</button>
+                @endif
                 <x-button.primary type="submit">Approve</x-button.primary>
             </x-slot>
         </x-modal.dialog>

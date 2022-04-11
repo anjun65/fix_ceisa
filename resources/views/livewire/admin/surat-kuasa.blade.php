@@ -285,11 +285,13 @@
                     <x-input.date disabled wire:model="editing.tanggal_kuasa" id="tanggal_kuasa" />
                 </x-input.group>
 
+                @if(App\Models\SuratKuasa::count() >= 1)
                 <x-input.group label="Upload File" for="photo" :error="$errors->first('upload')">
                     <x-button.secondary wire:click="download_surat({{ $kuasa->id }})">
                         Download File
                     </x-button.secondary>
                 </x-input.group>
+                @endif
 
                 <x-input.group for="awal_berlaku" label="Awal Berlaku" :borderless="true" :error="$errors->first('editing.awal_berlaku')">
                     <x-input.date disabled wire:model="editing.awal_berlaku" id="awal_berlaku" />
@@ -304,8 +306,9 @@
             <x-slot name="footer">
                 <x-button.secondary wire:click="$set('showEditModal', false)">Cancel</x-button.secondary>
                 
-                <button type="button" wire:click="rejected({{ $kuasa->id }})" class="bg-red-800 text-white py-2 px-4 border rounded-md text-sm leading-5 font-medium focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out border-gray-300 text-white active:bg-red-900 active:text-white hover:text-white">Reject</button>
-                
+                @if(App\Models\SuratKuasa::count() >= 1)
+                    <button type="button" wire:click="rejected({{ $kuasa->id }})" class="bg-red-800 text-white py-2 px-4 border rounded-md text-sm leading-5 font-medium focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition duration-150 ease-in-out border-gray-300 text-white active:bg-red-900 active:text-white hover:text-white">Reject</button>
+                @endif
                 <x-button.primary type="submit">Approve</x-button.primary>
             </x-slot>
         </x-modal.dialog>
