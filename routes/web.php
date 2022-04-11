@@ -18,6 +18,7 @@ use App\Http\Livewire\DataKemasan;
 
 use App\Http\Controllers\EditDokumenPabean;
 
+use App\Http\Livewire\Admin\Home as HomeAdmin;
 use App\Http\Livewire\Admin\Ppftz as ppftzAdmin;
 use App\Http\Livewire\Admin\SuratKuasa as SuratKuasaAdmin;
 use App\Http\Livewire\Admin\IzinImpor as IzinImporAdmin;
@@ -73,7 +74,7 @@ Route::group(['middleware' => ['admin']], function () {
 
     
 
-    Route::get('/admin', Home::class);
+    Route::get('/admin', HomeAdmin::class);
     Route::get('/admin/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
     Route::get('/admin/users', ManageUser::class);
 
