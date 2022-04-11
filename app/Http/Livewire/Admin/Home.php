@@ -11,6 +11,6 @@ class Home extends Component
     {
         return view('livewire.home', [
             'items' => HomeModel::all(),
-        ])->layout('layouts.admin');;
+        ])->layout('layouts.admin');
     }
 }

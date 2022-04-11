@@ -51,7 +51,7 @@ class DashboardController extends Controller
             'impor_diajukan' => $impor_diajukan,
             'impor_setuju' => $impor_setuju,
             'impor_ditolak' => $impor_ditolak,
-        ]);
+        ])->layout('layouts.admin');
         
     }
 }
