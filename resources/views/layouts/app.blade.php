@@ -66,11 +66,13 @@
                         <div class="flex-shrink-0 group block focus:outline-none">
                             <div class="flex items-center">
                                 <div>
-                                    <img class="inline-block h-10 w-auto rounded-full" src="/img/user-icon.png" alt="">
+                                    <img class="inline-block h-10 w-auto rounded-full" src="/img/user-icon.png" alt="Profile Photo">
                                 </div>
+
                                 <div class="ml-3">
-                                    <p class="text-base leading-6 font-medium text-white">
-                                        Hajrul Khaira
+                                    <p class="text-sm leading-5 font-medium text-gray-900">
+                                        {{ Auth::user()->name }}
+                                    </p>
                                     </p>
                                     <livewire:auth.logout/> 
                                 </div>
