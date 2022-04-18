@@ -19,7 +19,6 @@ class DataBarang extends Component
     public $showFilters = false;
     public $filters = [
         'search' => '',
-        'nomor_pengajuan_dokumen' => '',
     ];
 
     public $nomor;
@@ -97,7 +96,7 @@ class DataBarang extends Component
         $this->validate();
 
         $this->editing->fill([
-            'nomor_pengajuan_dokumen' => $this->filters['nomor_pengajuan_dokumen'],
+            'nomor_pengajuan_dokumen' => $this->nomor,
         ]);
 
         $this->editing->save();
