@@ -41,7 +41,7 @@ class DashboardController extends Controller
                     ->count();
 
                     
-        return view('pages.dashboard', [
+        return view('pages.admin.dashboard', [
             'ppftz_diajukan' => $ppftz_diajukan,
             'ppftz_setuju' => $ppftz_setuju,
             'ppftz_ditolak' => $ppftz_ditolak,

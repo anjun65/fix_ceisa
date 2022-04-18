@@ -2,7 +2,7 @@
     <form wire:submit.prevent="login" action="#" method="POST">
         <div>
             <label for="email" class="block text-sm font-medium leading-5 text-gray-700">
-                Email address
+                Username Learning
             </label>
             <div class="mt-1 rounded-md shadow-sm">
                 <input wire:model="email" id="email" type="text" required autofocus class="@error('email') border-red-500 @enderror appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
