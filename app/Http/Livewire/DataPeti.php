@@ -95,7 +95,7 @@ class DataPeti extends Component
         $this->validate();
 
         $this->editing->fill([
-            'nomor_pengajuan_dokumen' => $this->filters['nomor_pengajuan_dokumen'],
+            'nomor_pengajuan_dokumen' => $this->nomor,
         ]);
 
         $this->editing->save();
