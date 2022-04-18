@@ -51,7 +51,7 @@ class Login extends Component
                 ]);
 
                 Auth::login($newUser);
-                $request->session()->regenerate();
+                // $request->session()->regenerate();
 
                 return redirect('/');
             } else {
