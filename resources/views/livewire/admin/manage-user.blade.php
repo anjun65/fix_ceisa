@@ -111,7 +111,7 @@
                                 <x-icon.cash class="text-cool-gray-400"/>
 
                                 <p class="text-cool-gray-600 truncate">
-                                    {{ $user->email }}
+                                    {{ $user->username }}
                                 </p>
                             </span>
                         </x-table.cell>

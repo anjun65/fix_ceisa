@@ -530,7 +530,16 @@
 
                                                         <div class="p-6 text-grey-darker text-justify flex flex-col">
                                                             <label for="bendera" class="block text-sm font-medium text-gray-700 mb-4">Bendera</label>
-                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="bendera" id="bendera" @isset($items->bendera) value="{{ $items->bendera }}" @endisset placeholder="Bendera" />
+                                                            <x-input.select class="bendera" name="bendera" id="bendera">
+                                                                @isset($items->bendera)
+                                                                    <option value="{{ $items->bendera }}" selected>{{ $items->bendera }}</option>
+                                                                @else
+                                                                    <option value="" selected>Belum Memilih</option>
+                                                                @endisset
+                                                                @foreach ($countries as $country)
+                                                                    <option value="{{ $country->code }} - {{ $country->name }}">{{ $country->code }} - {{ $country->name }}</option>
+                                                                @endforeach
+                                                            </x-input.select>
                                                         </div>
 
                                                         <div class="p-6 text-grey-darker text-justify flex flex-col">
@@ -727,6 +736,9 @@
 
     <script>
     $(document).ready(function() {
+        
+        $('.bendera').select2();
+
         $('.pelabuhan_muat').select2();
         
         $('.pelabuhan_tujuan').select2();
