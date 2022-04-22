@@ -39,7 +39,8 @@ use App\Http\Livewire\Admin\Config\ConfigValuta;
 use App\Http\Livewire\Admin\Config\ConfigDocumentCode;
 use App\Http\Livewire\Admin\Config\ConfigCaraPengangkutan;
 use App\Http\Livewire\Admin\Config\ConfigJenisDokumen;
-
+use App\Http\Livewire\Admin\Config\ConfigJenisKemasan;
+use App\Http\Livewire\Admin\Config\ConfigJenisSatuan;
 use App\Http\Livewire\DokumenPPJK;
 /**
  * App Routes
@@ -85,7 +86,9 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/admin/config/valuta', ConfigValuta::class)->name('valuta-config');
     Route::get('/admin/config/document-code', ConfigDocumentCode::class)->name('document-code-config');
     Route::get('/admin/config/cara-pengangkutan', ConfigCaraPengangkutan::class)->name('cara-pengangkutan-config'); 
-    Route::get('/admin/config/jenis-dokumen', ConfigJenisDokumen::class)->name('jenis-dokumen-config');
+    Route::get('/admin/config/jenis-dokumen', ConfigJenisDokumen::class)->name('jenis-dokumen-config'); 
+    Route::get('/admin/config/jenis-kemasan', ConfigJenisKemasan::class)->name('jenis-kemasan-config');
+    Route::get('/admin/config/jenis-satuan', ConfigJenisSatuan::class)->name('jenis-satuan-config');
 });
 
 /**

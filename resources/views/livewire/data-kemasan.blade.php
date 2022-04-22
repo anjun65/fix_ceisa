@@ -153,12 +153,22 @@
                     <x-input.text type="number" wire:model="editing.jumlah" id="jumlah" placeholder="Jumlah Kemasan" />
                 </x-input.group>
 
-                <x-input.group for="jenis" label="Jenis Kemasan" :error="$errors->first('editing.jenis')">
+                {{-- <x-input.group for="jenis" label="Jenis Kemasan" :error="$errors->first('editing.jenis')">
                     <x-input.select wire:model="editing.jenis" id="jenis">
                         <option value="" selected>Belum Memilih</option>
                         <option value="1A - DRUM, STEEL">1A - DRUM STEEL</option>
                         <option value="1B - DRUM, ALUMUNIUM">1B - DRUM, ALUMUNIUM</option>
                         <option value="1D - DRUM, PLYWOOD">1D - DRUM, PLYWOOD</option>
+                    </x-input.select>
+                </x-input.group> --}}
+
+                <x-input.group for="jenis" label="Jenis item" :error="$errors->first('editing.jenis')">
+                    <x-input.select wire:model="editing.Kemasan" id="jenis">
+                            <option value="" disabled>Pilih Jenis Item...</option>
+
+                            @foreach (App\Models\ConfigJenisKemasan::all() as $jenis_dokumen)
+                            <option value="{{ $jenis_dokumen->code }} - {{ $jenis_dokumen->name }}">{{ $jenis_dokumen->code }} - {{ $jenis_dokumen->name }}</option>
+                            @endforeach
                     </x-input.select>
                 </x-input.group>
 
