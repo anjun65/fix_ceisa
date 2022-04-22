@@ -87,7 +87,7 @@ class DokumenPPJK extends Component
 
     public function lihat(ppftzmodel $pabean)
     {
-        return redirect()->route('edit-pabean', $pabean->nomor_aju_pabean);
+        return redirect()->route('admin-edit-pabean', $pabean->nomor_aju_pabean);
     }
 
 
