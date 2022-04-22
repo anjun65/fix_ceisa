@@ -161,9 +161,11 @@
 
                 <x-input.group for="jenis_dokumen" label="Jenis item" :error="$errors->first('editing.jenis_dokumen')">
                     <x-input.select wire:model="editing.jenis_dokumen" id="jenis_dokumen-status">
-                        <option value="">Pilih Jenis item...</option>
-                        <option value="03001 - Izin Prinsip Pendirian Kawasan Berikat">03001 - Izin Prinsip Pendirian Kawasan Berikat</option>
-                        <option value="380- INVOICE">380- INVOICE</option>
+                            <option value="" disabled>Pilih Jenis Item...</option>
+
+                            @foreach (App\Models\ConfigJenisDokumen::all() as $jenis_dokumen)
+                            <option value="{{ $jenis_dokumen->code }} - {{ $jenis_dokumen->name }}">{{ $jenis_dokumen->code }} - {{ $jenis_dokumen->name }}</option>
+                            @endforeach
                     </x-input.select>
                 </x-input.group>
 
