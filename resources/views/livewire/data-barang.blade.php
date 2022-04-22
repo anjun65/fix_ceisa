@@ -184,8 +184,8 @@
                     </x-input.select>
                 </x-input.group> --}}
 
-                <x-input.group for="jenis" label="Jenis item" :error="$errors->first('editing.jenis')">
-                    <x-input.select wire:model="editing.Kemasan" id="jenis">
+                <x-input.group for="jumlah_satuan" label="Jumlah Satuan" :error="$errors->first('editing.jumlah_satuan')">
+                    <x-input.select wire:model="editing.jumlah_satuan" id="jumlah_satuan">
                             <option value="" disabled>Pilih Jenis Item...</option>
 
                             @foreach (App\Models\ConfigJenisSatuan::all() as $jenis_dokumen)
