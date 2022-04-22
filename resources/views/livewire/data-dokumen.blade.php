@@ -22,7 +22,7 @@
     </div>
     
     <div class="p-4 bg-white rounded shadow hover:shadow-md duration-4">
-    <h1 class="text-lg font-semibold text-gray-900">Data item</h1>
+    <h1 class="text-lg font-semibold text-gray-900">Data Dokumen</h1>
 
     <div class="py-4 space-y-4">
         <!-- Top Bar -->

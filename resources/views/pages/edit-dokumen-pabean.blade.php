@@ -460,7 +460,7 @@
                                                     <div class="grid grid-cols-3 gap-2">
                                                         <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
                                                             <label for="nilai_barang" class="block text-sm font-medium text-gray-700 mb-4">Nilai Barang (IDR)</label>
-                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="nilai_barang" type="number" @isset($items->alamat_ppjk) value="{{ $items->nilai_barang }}" @endisset min="0" id="nilai_barang" placeholder="Nilai Barang" />
+                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="nilai_barang" type="number" @isset($items->nilai_barang) value="{{ $items->nilai_barang }}" @endisset min="0" id="nilai_barang" placeholder="Nilai Barang" />
                                                         </div>
                                                     </div>
 
@@ -511,9 +511,9 @@
                                                     <div class="grid grid-cols-4 gap-2">
                                                         <div class="p-6 text-grey-darker text-justify flex flex-col">
                                                             <label for="cara_angkut" class="block text-sm font-medium text-gray-700 mb-4">Cara Angkut</label>
-                                                            <x-input.select class="pelabuhan_tujuan" name="pelabuhan_tujuan" id="pelabuhan_tujuan">
-                                                                @isset($items->pelabuhan_tujuan)
-                                                                    <option value="{{ $items->pelabuhan_tujuan }}" selected>{{ $items->pelabuhan_tujuan }}</option>
+                                                            <x-input.select class="cara_angkut" name="cara_angkut" id="cara_angkut">
+                                                                @isset($items->cara_angkut)
+                                                                    <option value="{{ $items->cara_angkut }}" selected>{{ $items->cara_angkut }}</option>
                                                                 @else
                                                                     <option value="" selected>Belum Memilih</option>
                                                                 @endisset
@@ -589,7 +589,7 @@
 
                                                                 <div class="px-6 pt-6  text-grey-darker text-justify flex flex-col">
                                                                     <label for="pelabuhan_transit" class="block text-sm font-medium text-gray-700 mb-4">Pelabuhan Transit</label>
-                                                                    <x-input.select class="pelabuhan_transit" name="pelabuhan_tujuan" id="pelabuhan_tujuan">
+                                                                    <x-input.select class="pelabuhan_transit" name="pelabuhan_transit" id="pelabuhan_transit">
                                                                         @isset($items->pelabuhan_transit)
                                                                             <option value="{{ $items->pelabuhan_transit }}" selected>{{ $items->pelabuhan_transit }}</option>
                                                                         @else
