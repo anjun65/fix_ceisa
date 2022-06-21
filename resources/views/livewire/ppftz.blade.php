@@ -196,16 +196,16 @@
                     </x-input.select>
                 </x-input.group>
 
-                {{-- <div x-data="{ isPemasukan: false, isPengeluaran: false, }"> --}}
+                <div x-data="{ jenis: false}">
+
                     <x-input.group for="jenis_pemberitahuan" label="Jenis Pemberitahuan" :error="$errors->first('editing.jenis_pemberitahuan')">
-                        <x-input.select wire:model="editing.jenis_pemberitahuan" id="jenis_pemberitahuan">
+                        <x-input.select x-on:change="jenis = $event.target.value" wire:model="editing.jenis_pemberitahuan" id="jenis_pemberitahuan">
                             <option value="" selected>Belum Memilih</option>
-                            <option x-data="{ isPemasukan: true }" value="Pemasukan">Pemasukan</option>
+                            <option value="Pemasukan">Pemasukan</option>
                             <option value="Pengeluaran">Pengeluaran</option>
                         </x-input.select>
                     </x-input.group>
-
-                    {{-- <div x-show="isPemasukan"> --}}
+                    <div x-transition x-show="jenis == 'Pemasukan'">
                         <x-input.group for="jenis_pemberitahuan_lanjut" label="Jenis Masuk" :error="$errors->first('editing.jenis_pemberitahuan_lanjut')">
                             <x-input.select wire:model="editing.jenis_pemberitahuan_lanjut" id="jenis_pemberitahuan_lanjut">
                                 <option value="" selected>Belum Memilih</option>
@@ -215,9 +215,9 @@
                                 <option value="dari Tempat Lain Dalam Daerah Pabean">dari Tempat Lain Dalam Daerah Pabean</option>
                             </x-input.select>
                         </x-input.group>
-                    {{-- </div> --}}
+                    </div>
 
-                    {{-- <div x-show="isPengeluaran">
+                    <div x-transition x-show="jenis == 'Pengeluaran'">
                         <x-input.group for="jenis_pemberitahuan_lanjut" label="Jenis Keluar" :error="$errors->first('editing.jenis_pemberitahuan_lanjut')">
                             <x-input.select wire:model="editing.jenis_pemberitahuan_lanjut" id="jenis_pemberitahuan_lanjut">
                                 <option value="" selected>Belum Memilih</option>
@@ -227,9 +227,9 @@
                                 <option value="ke Tempat Penimbunanan Berikat">ke Tempat Penimbunanan Berikat</option>
                             </x-input.select>
                         </x-input.group>
-                    </div> --}}
+                    </div>
 
-                {{-- </div> --}}
+                </div>
                
 
                 
