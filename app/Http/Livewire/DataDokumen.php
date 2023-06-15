@@ -98,9 +98,15 @@ class DataDokumen extends Component
         
         $this->validate();
 
+        $file = '';
+
+        if($this->upload) {
+            $file = $this->upload->store('data_dokumen');
+        }
+
         $this->editing->fill([
             'nomor_pengajuan_dokumen' => $this->nomor,
-            'file' => $this->upload->store('data_dokumen'),
+            'file' => $file,
         ]);
 
 

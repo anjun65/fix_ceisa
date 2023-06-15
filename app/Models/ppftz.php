@@ -62,4 +62,9 @@ class ppftz extends Model
         'Ditolak' => 'Ditolak',
         'Diajukan' => 'Diajukan',
     ];
+
+    public function details()
+    {
+        return $this->hasOne(PpftzDetail::class, 'ppftz_id', 'id');
+    }
 }

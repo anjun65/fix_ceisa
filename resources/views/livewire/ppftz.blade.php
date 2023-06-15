@@ -197,7 +197,6 @@
                 </x-input.group>
 
                 <div x-data="{ jenis: false}">
-
                     <x-input.group for="jenis_pemberitahuan" label="Jenis Pemberitahuan" :error="$errors->first('editing.jenis_pemberitahuan')">
                         <x-input.select x-on:change="jenis = $event.target.value" wire:model="editing.jenis_pemberitahuan" id="jenis_pemberitahuan">
                             <option value="" selected>Belum Memilih</option>
@@ -237,7 +236,7 @@
             </x-slot>
 
             <x-slot name="footer">
-                <x-button.secondary wire:click="$set('showEditModal', false)">Cancel</x-button.secondary>
+                <x-button.secondary wire:click="$set('showEditModal', false)" >Cancel</x-button.secondary>
 
                 <x-button.primary type="submit">Save</x-button.primary>
             </x-slot>

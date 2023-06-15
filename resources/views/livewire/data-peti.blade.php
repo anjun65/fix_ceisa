@@ -18,6 +18,9 @@
             <li class="mr-2">
                 <a href="{{ route('edit-barang', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Data Barang</a>
             </li>
+            <li class="mr-2">
+                <a href="{{ route('print-index-pabean', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">PDF</a>
+            </li>
         </ul>
     </div>
     

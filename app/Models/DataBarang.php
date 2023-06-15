@@ -15,6 +15,19 @@ class DataBarang extends Model
         'merek',
         'jumlah_satuan',
         'bruto',
+        'tipe',
+        'ukuran',
+        'spesifikasi_lain',
+        'kode_barang',
+        'asal_barang',
+        'jenis_satuan',
+        'jumlah_kemasan',
+        'jenis_kemasan',
+        'neto',
+        'volume',
+        'harga_ekspor',
+        'fob',
+        'is_lartas',
     ];
     
 }

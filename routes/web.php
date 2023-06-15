@@ -60,6 +60,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit-data-dokumen/{nomor_aju_pabean}', DataDokumen::class)->name('edit-dokumen');
     Route::get('/edit-data-peti/{nomor_aju_pabean}', DataPeti::class)->name('edit-peti');
     Route::get('/edit-data-kemasan/{nomor_aju_pabean}', DataKemasan::class)->name('edit-kemasan');
+    Route::get('/edit-dokumen-pabean/pdf/ppftz/{nomor_aju_pabean}', [EditDokumenPabean::class, 'pdf'])->name('print-pabean');
+    Route::get('/edit-dokumen-pabean/pdf/nbbp/{nomor_aju_pabean}', [EditDokumenPabean::class, 'pdfNppb'])->name('print-nppb-pabean');
+    Route::get('/edit-dokumen-pabean/pdf/sppb/{nomor_aju_pabean}', [EditDokumenPabean::class, 'pdfSppb'])->name('print-sppb-pabean');
+    Route::get('/edit-dokumen-pabean/pdf/index/{nomor_aju_pabean}', [EditDokumenPabean::class, 'pdfindex'])->name('print-index-pabean');
 });
 
 Route::group(['middleware' => ['admin']], function () {

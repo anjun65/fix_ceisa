@@ -93,7 +93,7 @@
                                 </div>
                                 <div class="ml-3">
                                     <p class="text-base leading-6 font-medium text-white">
-                                        Hajrul Khaira
+                                        {{ Auth::user()->name}}
                                     </p>
                                     <livewire:auth.logout/> 
                                 </div>
@@ -173,7 +173,7 @@
 
                             <div class="ml-3">
                                 <p class="text-sm leading-5 font-medium text-gray-900">
-                                    Hajrul Khaira
+                                    {{ Auth::user()->name}}
                                 </p>
 
                                 <livewire:auth.logout/> 
@@ -217,6 +217,10 @@
                                         </li>
                                         <li class="mr-2">
                                             <a href="{{ route('edit-barang', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Data Barang</a>
+                                        </li>
+
+                                        <li class="mr-2">
+                                            <a href="{{ route('print-index-pabean', $nomor_aju_pabean )}}" class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">PDF</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -277,7 +281,9 @@
                                                                         <option value="" selected>Belum Memilih</option>
                                                                     @endisset
                                                                     <option value="1 - Pengeluaran Biasa">1 - Pengeluaran Biasa</option>
-                                                                    <option value="2 - Pengeluaran Sementara ke Kawasan Bebas">2 - Pengeluaran Sementara ke Kawasan Bebas</option>
+                                                                    <option value="2 - Pengeluaran Khusus ke Luar Daerah Pabean">2 - Pengeluaran Khusus ke Luar Daerah Pabean</option>
+                                                                    <option value="3 - Pengeluaran Sementara dari Kawasan Bebas">3 - Pengeluaran Sementara dari Kawasan Bebas</option>
+                                                                    <option value="4 - Pengeluaran Kembali dari Kawasan Bebas">4 - Pengeluaran Kembali dari Kawasan Bebas</option>
                                                                 </x-input.select>
                                                             </div>
                                                         @else
@@ -297,9 +303,9 @@
                                                         @endif
                                                         
                                                         
-
+                                                        @if ($items->jenis_pemberitahuan == "Pengeluaran")
                                                         <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
-                                                            <label for="tujuan_pemasukan" class="block text-sm font-medium text-gray-700 mb-4">Tujuan Pemasukan</label>
+                                                            <label for="tujuan_pemasukan" class="block text-sm font-medium text-gray-700 mb-4">Tujuan Pengeluaran</label>
                                                             <x-input.select name="tujuan_pemasukan" id="tujuan_pemasukan">
                                                                 @isset($items->tujuan_pemasukan)
                                                                     <option value="{{ $items->tujuan_pemasukan }}" selected>{{ $items->tujuan_pemasukan }}</option>
@@ -307,11 +313,32 @@
                                                                     <option value="" selected>Belum Memilih</option>
                                                                 @endisset
                                                                 <option value="1 - Dijual">1 - Dijual</option>
-                                                                <option value="2 - Dipergunakan">2 - Dipergunakan</option>
-                                                                <option value="3 - Ditimbun sementara tanpa diolah">3 - Ditimbun sementara tanpa diolah</option>
-                                                                <option value="4 - Diolah">4 - Diolah</option>
+                                                                <option value="2 - Diperbaiki">2 - Diperbaiki</option>
+                                                                <option value="3 - Direkomendasi">3 - Direkomendasi</option>
+                                                                <option value="4 - Diuji">4 - Diuji</option>
+                                                                <option value="5 - Diuji">5 - Dikalibrasi</option>
+                                                                <option value="6 - Pengerjaan Proyek">6 - Pengerjaan Proyek</option>
+                                                                <option value="7 - Keperluan peragaan atau demontrasi">7 - Keperluan peragaan atau demontrasi</option>
+                                                                <option value="8 - Dikembalikan">8 - Dikembalikan</option>
+                                                                <option value="20 - Lainnya">20 - Lainnya</option>
                                                             </x-input.select>
                                                         </div>
+                                                        @else
+                                                            <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                                <label for="tujuan_pemasukan" class="block text-sm font-medium text-gray-700 mb-4">Tujuan Pemasukan</label>
+                                                                <x-input.select name="tujuan_pemasukan" id="tujuan_pemasukan">
+                                                                    @isset($items->tujuan_pemasukan)
+                                                                        <option value="{{ $items->tujuan_pemasukan }}" selected>{{ $items->tujuan_pemasukan }}</option>
+                                                                    @else
+                                                                        <option value="" selected>Belum Memilih</option>
+                                                                    @endisset
+                                                                    <option value="1 - Dijual">1 - Dijual</option>
+                                                                    <option value="2 - Dipergunakan">2 - Dipergunakan</option>
+                                                                    <option value="3 - Ditimbun sementara tanpa diolah">3 - Ditimbun sementara tanpa diolah</option>
+                                                                    <option value="4 - Diolah">4 - Diolah</option>
+                                                                </x-input.select>
+                                                            </div>
+                                                        @endif
 
                                                         <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
                                                             <label for="asal_barang" class="block text-sm font-medium text-gray-700 mb-4">Asal Barang</label>
@@ -323,10 +350,59 @@
                                                                 @endisset
                                                                 <option value="1 - sepenuhnya diperoleh dan/atau diproduksi di luar Daerah Pabean">1 - sepenuhnya diperoleh dan/atau diproduksi di luar Daerah Pabean</option>
                                                                 <option value="2 - sepenuhnya diperoleh dan/atau diproduksi di tempat lain dalam Daerah Pabean">2 - sepenuhnya diperoleh dan/atau diproduksi di tempat lain dalam Daerah Pabean</option>
-                                                                <option value="3 - Sepenuhnya diperoleh dan/atau diproduksi di Kawasan Bebas atau Kawasan Bebas lainnya dengan menggunakan bahan baku dan/atau">3 - Sepenuhnya diperoleh dan/atau diproduksi di Kawasan Bebas atau Kawasan Bebas lainnya dengan menggunakan bahan baku dan/atau</option>
+                                                                <option value="3 - sepenuhnya diperoleh dan/atau diproduksi di Kawasan Bebas atau Kawasan Bebas lainnya dengan menggunakan bahan baku dan/atau">3 - Sepenuhnya diperoleh dan/atau diproduksi di Kawasan Bebas atau Kawasan Bebas lainnya dengan menggunakan bahan baku dan/atau</option>
+                                                                @if ($items->jenis_pemberitahuan == "Pengeluaran")
+                                                                    <option value="4 - sepenuhnya diperoleh dan/atau diproduksi di Tempat Penimbunan Berikat atau Kawasan Ekonomi Khusus">4 - sepenuhnya diperoleh dan/atau diproduksi di Tempat Penimbunan Berikat atau Kawasan Ekonomi Khusus</option>
+                                                                @endif
+                                                                <option value="5 - Lainnya">5 - Lainnya</option>
                                                             </x-input.select>
                                                         </div>
 
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="serah_barang" class="block text-sm font-medium text-gray-700 mb-4">Cara Penyerahan Barang</label>
+                                                            <x-input.select name="serah_barang" id="serah_barang">
+                                                                @isset($items->details->serah_barang)
+                                                                    <option value="{{ $items->details->serah_barang }}" selected>{{ $items->details->serah_barang }}</option>
+                                                                @else
+                                                                    <option value="" selected>Belum Memilih</option>
+                                                                @endisset
+                                                                <option value="CFR - Cost and Freight (named port of destination)">CFR - Cost and Freight (named port of destination)</option>
+                                                                <option value="CIF - Cost, Insurance & Freight (named port of destination)">CIF - Cost, Insurance & Freight (named port of destination)</option>
+                                                                <option value="CIP - Carriage and Insurance Paid To (named place of destination)">CIP - Carriage and Insurance Paid To (named place of destination)</option>
+                                                                <option value="CPT - Carriage Paid To (named place of destination)">CPT - Carriage Paid To (named place of destination)</option>
+                                                                <option value="DAP - Delivered At Place (named place of destination)">DAP - Delivered At Place (named place of destination)</option>
+                                                                <option value="DAT - Delivered At Terminal (named terminal at port of place of destination)">DAT - Delivered At Terminal (named terminal at port of place of destination)</option>
+                                                                <option value="DDP - Delivered Duty Paid (named place of destination)">DDP - Delivered Duty Paid (named place of destination)</option>
+                                                                <option value="EXW - Ex Works (named place of delivery)">EXW - Ex Works (named place of delivery)</option>
+                                                                <option value="FAS - Free Alongside Ship (named port of shipment)">FAS - Free Alongside Ship (named port of shipment)</option>
+                                                                <option value="FCA - Free Carrier (named place of delivery)">FCA - Free Carrier (named place of delivery)</option>
+                                                                <option value="FOB - Free On Board (named port of terminal)">FOB - Free On Board (named port of terminal)</option>
+                                                            </x-input.select>
+                                                        </div>
+
+
+                                                        @if ($items->jenis_pemberitahuan == "Pengeluaran")
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="cara_bayar" class="block text-sm font-medium text-gray-700 mb-4">Cara Pembayaran</label>
+                                                            <x-input.select name="cara_bayar" id="cara_bayar">
+                                                                @isset($items->details->cara_bayar)
+                                                                    <option value="{{ $items->details->cara_bayar }}" selected>{{ $items->details->cara_bayar }}</option>
+                                                                @else
+                                                                    <option value="" selected>Belum Memilih</option>
+                                                                @endisset
+                                                                <option value="01 - tunai/biasa">01 - tunai/biasa</option>
+                                                                <option value="02 - berkala">02 - berkala</option>
+                                                                <option value="03 - jaminan">03 - jaminan</option>
+                                                                <option value="04 - lainnya">04 - lainnya</option>
+                                                            </x-input.select>
+                                                        </div>
+
+                                                        <div class="hidden px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="nomor_aju_pabean" id="nomor_aju_pabean" value="{{ $nomor_aju_pabean }}" placeholder="" />
+                                                        </div>
+                                                        @endif
+
+                                                        @if ($items->jenis_pemberitahuan == "Pemasukan")
                                                         <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
                                                             <label for="jenis_faktur" class="block text-sm font-medium text-gray-700 mb-4">Jenis Faktur</label>
                                                             <x-input.select name="jenis_faktur" id="jenis_faktur">
@@ -345,6 +421,7 @@
                                                         <div class="hidden px-6 pt-6 text-grey-darker text-justify flex flex-col">
                                                             <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="nomor_aju_pabean" id="nomor_aju_pabean" value="{{ $nomor_aju_pabean }}" placeholder="" />
                                                         </div>
+                                                        @endif
                                                         
                                                     </div>
                                                     
@@ -382,6 +459,24 @@
                                                         <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
                                                             <label for="alamat_pengirim" class="block text-sm font-medium text-gray-700 mb-4">Alamat Pengirim</label>
                                                             <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="alamat_pengirim" id="alamat_pengirim" @isset($items->alamat_pengirim) value="{{ $items->alamat_pengirim }}" @endisset placeholder="Alamat Pengirim" />
+                                                        </div>
+
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="ijin_bpk_pengirim" class="block text-sm font-medium text-gray-700 mb-4">Nomor ijin Bpk Pengirim</label>
+                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="ijin_bpk_pengirim" id="ijin_bpk_pengirim" @isset($items->details->ijin_bpk_pengirim) value="{{ $items->details->ijin_bpk_pengirim }}" @endisset placeholder="Nomor Ijin BPK Pengirim" />
+                                                        </div>
+                                                        
+
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="tanggal_ijin_bpk_pengirim" class="block text-sm font-medium text-gray-700 mb-4">Tanggal Ijin BPK Pengirim</label>
+                                                            
+                                                            <div class="relative">
+                                                                <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                                                                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                                                                </div>
+                                                                
+                                                                <input datepicker datepicker-buttons datepicker-format="yyyy-mm-dd" autocomplete="off" type="text" name="tanggal_ijin_bpk_pengirim" @isset($items->details->tanggal_ijin_bpk_pengirim) value="{{ $items->details->tanggal_ijin_bpk_pengirim }}" @endisset class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Pilih tanggal">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     
@@ -422,8 +517,58 @@
                                                         </div>
 
                                                         <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
-                                                            <label for="nomor_ijin_bpk_penerima" class="block text-sm font-medium text-gray-700 mb-4">Nomor Ijin Bpk Penerima</label>
-                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="nomor_ijin_bpk_penerima"  id="nomor_ijin_bpk_penerima" @isset($items->nomor_ijin_bpk_penerima) value="{{ $items->nomor_ijin_bpk_penerima }}" @endisset placeholder="Nomor Ijin Bpk Penerima" />
+                                                            <label for="negara_penerima" class="block text-sm font-medium text-gray-700 mb-4">Negara Penerima</label>
+                                                            
+                                                            <x-input.select class="negara_penerima" name="negara_penerima" id="negara_penerima">
+                                                                @isset($items->details->negara_penerima)
+                                                                    <option value="{{ $items->details->negara_penerima }}" selected>{{ $items->details->negara_penerima }}</option>
+                                                                @else
+                                                                    <option value="" selected>Belum Memilih</option>
+                                                                @endisset
+                                                                @foreach ($countries as $country)
+                                                                    <option value="{{ $country->code }} - {{ $country->name }}">{{ $country->code }} - {{ $country->name }}</option>
+                                                                @endforeach
+                                                            </x-input.select>
+
+                                                            
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="flex flex-row justify-between uppercase font-bold text-blue-dark border-b p-6">
+                                                        <p>Penjual<p>
+                                                        <div class="cursor-pointer text-grey-dark hover:text-blue duration-4"><i class="fas fa-ellipsis-v"></i></div>
+                                                    </div>
+
+                                                    <div class="grid grid-cols-2 gap-2">
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="jenis_identitas_penjual" class="block text-sm font-medium text-gray-700 mb-4">Jenis Identitas Penjual</label>
+                                                            <x-input.select name="jenis_identitas_penjual" id="jenis_identitas_penjual">
+                                                                @isset($items->details->jenis_identitas_penjual)
+                                                                    <option value="{{ $items->details->jenis_identitas_penjual }}" selected>{{ $items->details->jenis_identitas_penjual }}</option>
+                                                                @else
+                                                                    <option value="" selected>Belum Memilih</option>
+                                                                @endisset
+                                                                <option value="2 - Passport">2 - Passport</option>
+                                                                <option value="3 - KTP">3 - KTP</option>
+                                                                <option value="4 - Lainnya">4 - Lainnya</option>
+                                                                <option value="5 - NPWP 15 Digit">5 - NPWP 15 Digit</option>
+                                                            </x-input.select>
+                                                        </div>
+
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="nomor_identitas_penjual" class="block text-sm font-medium text-gray-700 mb-4">Nomor Identitas Penjual</label>
+                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="nomor_identitas_penjual"  id="nomor_identitas_penjual" @isset($items->details->nomor_identitas_penjual) value="{{ $items->details->nomor_identitas_penjual }}" @endisset placeholder="Nomor Identitas" />
+                                                        </div>
+
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="nama_penjual" class="block text-sm font-medium text-gray-700 mb-4">Nama Penjual</label>
+                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="nama_penjual"  id="nama_penjual" @isset($items->details->nama_penjual) value="{{ $items->details->nama_penjual }}" @endisset placeholder="Nama Penjual" />
+                                                        </div>
+
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="alamat_penjual" class="block text-sm font-medium text-gray-700 mb-4">Alamat Penjual</label>
+                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="alamat_penjual"  id="alamat_penjual" @isset($items->details->alamat_penjual) value="{{ $items->details->alamat_penjual }}" @endisset placeholder="Alamat Penjual" />
                                                         </div>
 
                                                     </div>
@@ -458,13 +603,119 @@
                                                     </div>
 
                                                     <div class="grid grid-cols-3 gap-2">
-                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                        {{-- <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
                                                             <label for="nilai_barang" class="block text-sm font-medium text-gray-700 mb-4">Nilai Barang (IDR)</label>
                                                             <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="nilai_barang" type="number" @isset($items->nilai_barang) value="{{ $items->nilai_barang }}" @endisset min="0" id="nilai_barang" placeholder="Nilai Barang" />
+                                                        </div> --}}
+
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="transaksi" class="block text-sm font-medium text-gray-700 mb-4">Transaksi</label>
+                                                            <x-input.select class="transaksi" name="transaksi" id="transaksi">
+                                                                @isset($items->details->transaksi)
+                                                                    <option value="{{ $items->details->transaksi }}" selected>{{ $items->details->transaksi }}</option>
+                                                                @else
+                                                                    <option value="" selected>Belum Memilih</option>
+                                                                @endisset
+                                                                
+                                                                <option value="01 - Pembayaran di muka (advanced payment)">01 - Pembayaran di muka (advanced payment)</option>
+                                                                <option value="02 - Pembayaran kemudian (open payment) secara bertahap">02 - Pembayaran kemudian (open payment) secara bertahap</option>
+                                                                <option value="03 - Pembayaran kemudian (open payment) secara tunai">03 - Pembayaran kemudian (open payment) secara tunai</option>
+                                                                <option value="04 - Sight Letter of Credit">04 - Sight Letter of Credit</option>
+                                                                <option value="05 - Usance Letter of Credit">05 - Usance Letter of Credit</option>
+                                                                <option value="06 - Red Clause Letter of Credit">06 - Red Clause Letter of Credit</option>
+                                                                <option value="07 - Inkaso (collection draft)">07 - Inkaso (collection draft)</option>
+                                                                <option value="08 - Konsinyasi (consignment)">08 - Konsinyasi (consignment)</option>
+                                                                <option value="09 - Inter Company Account (ICA)">09 - Inter Company Account (ICA)</option>
+                                                                <option value="10 - Pembayaran tunai di Dalam Negeri">10 - Pembayaran tunai di Dalam Negeri</option>
+                                                                <option value="11 - Telegraph Transfer (T/T) di Dalam Negeri">11 - Telegraph Transfer (T/T) di Dalam Negeri</option>
+                                                                <option value="12 - Imbal Dagang (IMB)">12 - Imbal Dagang (IMB)</option>
+                                                                <option value="13 - Tanpa Pembayaran">13 - Tanpa Pembayaran</option>
+                                                                <option value="14 - Lainnya">14 - Lainnya</option>
+                                                            </x-input.select>
                                                         </div>
+                                                        
+
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="transaksi_valuta" class="block text-sm font-medium text-gray-700 mb-4">Valuta</label>
+                                                            <x-input.select class="transaksi_valuta" name="transaksi_valuta" id="transaksi_valuta">
+                                                                @isset($items->details->transaksi_valuta)
+                                                                    <option value="{{ $items->details->transaksi_valuta }}" selected>{{ $items->details->transaksi_valuta }}</option>
+                                                                @else
+                                                                    <option value="" selected>Belum Memilih</option>
+                                                                @endisset
+                                                                @foreach ($valutas as $valuta)
+                                                                    <option value="{{ $valuta->code}}">{{ $valuta->code}} - {{ $valuta->name }}</option>
+                                                                @endforeach
+                                                            </x-input.select>
+                                                        </div>
+
+                                                        
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="transaksi_kurs" class="block text-sm font-medium text-gray-700 mb-4">NDPBM/Kurs</label>
+                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="transaksi_kurs" type="number" @isset($items->details->transaksi_kurs) value="{{ $items->details->transaksi_kurs }}" @endisset min="0" id="kurs" placeholder="NDPBM/Kurs" />
+                                                        </div>
+
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="transaksi_fob" class="block text-sm font-medium text-gray-700 mb-4">FOB</label>
+                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="transaksi_fob" type="number" @isset($items->details->transaksi_fob) value="{{ $items->details->transaksi_fob }}" @endisset min="0" id="kurs" placeholder="FOB" />
+                                                        </div>
+
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="transaksi_freight" class="block text-sm font-medium text-gray-700 mb-4">Freight</label>
+                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="transaksi_freight" type="number" @isset($items->details->transaksi_freight) value="{{ $items->details->transaksi_freight }}" @endisset min="0" id="kurs" placeholder="Freight" />
+                                                        </div>
+
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="jenis_asuransi" class="block text-sm font-medium text-gray-700 mb-4">Jenis Asuransi</label>
+                                                            <x-input.select class="jenis_asuransi" name="jenis_asuransi" id="jenis_asuransi">
+                                                                @isset($items->details->jenis_asuransi)
+                                                                    <option value="{{ $items->details->jenis_asuransi }}" selected>{{ $items->details->jenis_asuransi }}</option>
+                                                                @else
+                                                                    <option value="" selected>Belum Memilih</option>
+                                                                @endisset
+                                                                
+                                                                <option value="1 - Dalam Negeri">1 - Dalam Negeri</option>
+                                                                <option value="2 - Luar Negeri">2 - Luar Negeri</option>
+                                                            </x-input.select>
+                                                        </div>
+
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="transaksi_asuransi" class="block text-sm font-medium text-gray-700 mb-4">Asuransi</label>
+                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="transaksi_asuransi" type="number" @isset($items->details->transaksi_asuransi) value="{{ $items->details->transaksi_asuransi }}" @endisset min="0" id="transaksi_asuransi" placeholder="Asuransi" />
+                                                        </div>
+
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="transaksi_maklon" class="block text-sm font-medium text-gray-700 mb-4">Nilai Maklon (IDR)</label>
+                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="transaksi_maklon" type="number" @isset($items->details->transaksi_maklon) value="{{ $items->details->transaksi_maklon }}" @endisset min="0" id="transaksi_maklon" placeholder="Nilai Maklon (IDR)" />
+                                                        </div>
+
+
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="transaksi_curah" class="block text-sm font-medium text-gray-700 mb-4">Curah/Non Curah</label>
+                                                            <x-input.select class="transaksi_curah" name="transaksi_curah" id="transaksi_curah">
+                                                                @isset($items->details->transaksi_curah)
+                                                                    <option value="{{ $items->details->transaksi_curah }}" selected>{{ $items->details->transaksi_curah }}</option>
+                                                                @else
+                                                                    <option value="" selected>Belum Memilih</option>
+                                                                @endisset
+                                                                
+                                                                <option value="Curah">Curah</option>
+                                                                <option value="Non Curah">Non Curah</option>
+                                                            </x-input.select>
+
+                                                            <label for="transaksi_sawit" class="block text-sm font-medium text-gray-700 mb-4">*Hanya untuk produk Sawit dan turunannya</label>
+                                                        </div>
+
+                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="transaksi_sawit" class="block text-sm font-medium text-gray-700 mb-4">Dana Pungutan Sawit</label>
+                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="transaksi_sawit" type="number" @isset($items->details->transaksi_sawit) value="{{ $items->details->transaksi_sawit }}" @endisset min="0" id="transaksi_sawit" placeholder="Dana Pungutan Sawit" />
+                                                            <label for="transaksi_sawit" class="block text-sm font-medium text-gray-700 mb-4">*Hanya untuk produk Sawit dan turunannya</label>
+                                                        </div>
+
+
                                                     </div>
 
-                                                    <div class="flex flex-row justify-between uppercase font-bold text-blue-dark border-b p-6">
+                                                    {{-- <div class="flex flex-row justify-between uppercase font-bold text-blue-dark border-b p-6">
                                                         <p>Data Transaksi Perdagangan<p>
                                                         <div class="cursor-pointer text-grey-dark hover:text-blue duration-4"><i class="fas fa-ellipsis-v"></i></div>
                                                     </div>
@@ -501,7 +752,7 @@
                                                             <label for="subsubpos_bc11" class="block text-sm font-medium text-gray-700 mb-4">Subsubpos Bc11</label>
                                                             <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="subsubpos_bc11" id="subsubpos_bc11" @isset($items->subsubpos_bc11) value="{{ $items->subsubpos_bc11 }}" @endisset placeholder="Subsubpos Bc11" />
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
 
                                                     <div class="flex flex-row justify-between uppercase font-bold text-blue-dark border-b p-6">
                                                         <p>Data Pengangkutan<p>
@@ -545,6 +796,21 @@
                                                         <div class="p-6 text-grey-darker text-justify flex flex-col">
                                                             <label for="nomor_voy_flight_pol" class="block text-sm font-medium text-gray-700 mb-4">Nomor Voy Flight Pol</label>
                                                             <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="nomor_voy_flight_pol" id="nomor_voy_flight_pol" @isset($items->nomor_voy_flight_pol) value="{{ $items->nomor_voy_flight_pol }}" @endisset placeholder="Nomor Voy Flight Pol" />
+                                                        </div>
+
+                                                        <div class="px-6 text-grey-darker text-justify flex flex-col">
+                                                            <label for="negara_tujuan" class="block text-sm font-medium text-gray-700 mb-4">Negara Tujuan</label>
+                                                            
+                                                            <x-input.select class="negara_tujuan" name="negara_tujuan" id="negara_tujuan">
+                                                                @isset($items->details->negara_tujuan)
+                                                                    <option value="{{ $items->details->negara_tujuan }}" selected>{{ $items->details->negara_tujuan }}</option>
+                                                                @else
+                                                                    <option value="" selected>Belum Memilih</option>
+                                                                @endisset
+                                                                @foreach ($countries as $country)
+                                                                    <option value="{{ $country->code }} - {{ $country->name }}">{{ $country->code }} - {{ $country->name }}</option>
+                                                                @endforeach
+                                                            </x-input.select>
                                                         </div>
                                                     </div>
 

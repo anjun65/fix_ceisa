@@ -35,6 +35,24 @@ class DataBarang extends Component
         'editing.merek' => 'required',
         'editing.jumlah_satuan' => 'required',
         'editing.bruto' => 'required',
+        'editing.nomor_pengajuan_dokumen' => 'nullable',
+        'editing.pos_tarif' => 'nullable',
+        'editing.merek' => 'nullable',
+        'editing.jumlah_satuan' => 'nullable',
+        'editing.bruto' => 'nullable',
+        'editing.tipe' => 'nullable',
+        'editing.ukuran' => 'nullable',
+        'editing.spesifikasi_lain' => 'nullable',
+        'editing.kode_barang' => 'nullable',
+        'editing.asal_barang' => 'nullable',
+        'editing.jenis_satuan' => 'nullable',
+        'editing.jumlah_kemasan' => 'nullable',
+        'editing.jenis_kemasan' => 'nullable',
+        'editing.neto' => 'nullable',
+        'editing.volume' => 'nullable',
+        'editing.harga_ekspor' => 'nullable',
+        'editing.fob' => 'nullable',
+        'editing.is_lartas' => 'nullable',
     ]; }
 
     public function mount($nomor_aju_pabean) { 
@@ -125,6 +143,8 @@ class DataBarang extends Component
 
     public function render()
     {
+        
+
         return view('livewire.data-barang', [
             'items' => $this->rows,
             'nomor_aju_pabean' => $this->nomor,
