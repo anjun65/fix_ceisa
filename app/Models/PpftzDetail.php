@@ -32,6 +32,8 @@ class PpftzDetail extends Model
         'transaksi_maklon',
         'transaksi_sawit',
         'transaksi_curah',
+        'transaksi_cif',
+        'transaksi_voluntary',
     ];
 
 

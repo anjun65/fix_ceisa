@@ -336,6 +336,9 @@
                                                                     <option value="2 - Dipergunakan">2 - Dipergunakan</option>
                                                                     <option value="3 - Ditimbun sementara tanpa diolah">3 - Ditimbun sementara tanpa diolah</option>
                                                                     <option value="4 - Diolah">4 - Diolah</option>
+                                                                    <option value="4 - Diolah">5 - Diperbaiki</option>
+                                                                    <option value="4 - Diolah">6 - Dikembalikan</option>
+                                                                    <option value="4 - Diolah">15 - Lainnya</option>
                                                                 </x-input.select>
                                                             </div>
                                                         @endif
@@ -357,7 +360,7 @@
                                                                 <option value="5 - Lainnya">5 - Lainnya</option>
                                                             </x-input.select>
                                                         </div>
-
+                                                        @if ($items->jenis_pemberitahuan == "Pengeluaran")
                                                         <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
                                                             <label for="serah_barang" class="block text-sm font-medium text-gray-700 mb-4">Cara Penyerahan Barang</label>
                                                             <x-input.select name="serah_barang" id="serah_barang">
@@ -379,6 +382,7 @@
                                                                 <option value="FOB - Free On Board (named port of terminal)">FOB - Free On Board (named port of terminal)</option>
                                                             </x-input.select>
                                                         </div>
+                                                        @endif
 
 
                                                         @if ($items->jenis_pemberitahuan == "Pengeluaran")
@@ -402,7 +406,7 @@
                                                         </div>
                                                         @endif
 
-                                                        @if ($items->jenis_pemberitahuan == "Pemasukan")
+                                                        {{-- @if ($items->jenis_pemberitahuan == "Pemasukan")
                                                         <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
                                                             <label for="jenis_faktur" class="block text-sm font-medium text-gray-700 mb-4">Jenis Faktur</label>
                                                             <x-input.select name="jenis_faktur" id="jenis_faktur">
@@ -416,12 +420,12 @@
                                                                 <option value="FP-07">FP-07</option>
                                                                 <option value="Dipersamakan Dengan Faktur">Dipersamakan Dengan Faktur</option>
                                                             </x-input.select>
-                                                        </div>
+                                                        </div> --}}
 
-                                                        <div class="hidden px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                        {{-- <div class="hidden px-6 pt-6 text-grey-darker text-justify flex flex-col">
                                                             <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="nomor_aju_pabean" id="nomor_aju_pabean" value="{{ $nomor_aju_pabean }}" placeholder="" />
                                                         </div>
-                                                        @endif
+                                                        @endif --}}
                                                         
                                                     </div>
                                                     
@@ -659,6 +663,26 @@
                                                             <label for="transaksi_fob" class="block text-sm font-medium text-gray-700 mb-4">FOB</label>
                                                             <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="transaksi_fob" type="number" @isset($items->details->transaksi_fob) value="{{ $items->details->transaksi_fob }}" @endisset min="0" id="kurs" placeholder="FOB" />
                                                         </div>
+                                                        @if ($items->jenis_pemberitahuan == "Pemasukan")
+                                                            <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                                <label for="transaksi_cif" class="block text-sm font-medium text-gray-700 mb-4">CIF</label>
+                                                                <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="transaksi_cif" type="number" @isset($items->details->transaksi_cif) value="{{ $items->details->transaksi_cif }}" @endisset min="0" id="kurs" placeholder="CIF" />
+                                                            </div>
+
+                                                            <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                                <label for="transaksi_voluntary" class="block text-sm font-medium text-gray-700 mb-4">Voluntary Declaration</label>
+                                                                <x-input.select class="transaksi_voluntary" name="transaksi_voluntary" id="jenis_asuransi">
+                                                                    @isset($items->details->transaksi_voluntary)
+                                                                        <option value="{{ $items->details->transaksi_voluntary }}" selected>{{ $items->details->transaksi_voluntary }}</option>
+                                                                    @else
+                                                                        <option value="" selected>Belum Memilih</option>
+                                                                    @endisset
+                                                                    
+                                                                    <option value="1 - Dalam Negeri">Iya</option>
+                                                                    <option value="2 - Luar Negeri">Tidak</option>
+                                                                </x-input.select>
+                                                            </div>
+                                                        @endif
 
                                                         <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
                                                             <label for="transaksi_freight" class="block text-sm font-medium text-gray-700 mb-4">Freight</label>
@@ -684,10 +708,13 @@
                                                             <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="transaksi_asuransi" type="number" @isset($items->details->transaksi_asuransi) value="{{ $items->details->transaksi_asuransi }}" @endisset min="0" id="transaksi_asuransi" placeholder="Asuransi" />
                                                         </div>
 
-                                                        <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
-                                                            <label for="transaksi_maklon" class="block text-sm font-medium text-gray-700 mb-4">Nilai Maklon (IDR)</label>
-                                                            <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="transaksi_maklon" type="number" @isset($items->details->transaksi_maklon) value="{{ $items->details->transaksi_maklon }}" @endisset min="0" id="transaksi_maklon" placeholder="Nilai Maklon (IDR)" />
-                                                        </div>
+                                                        @if ($items->jenis_pemberitahuan == "Pengeluaran")
+                                                            <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                                <label for="transaksi_maklon" class="block text-sm font-medium text-gray-700 mb-4">Nilai Maklon (IDR)</label>
+                                                                <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="transaksi_maklon" type="number" @isset($items->details->transaksi_maklon) value="{{ $items->details->transaksi_maklon }}" @endisset min="0" id="transaksi_maklon" placeholder="Nilai Maklon (IDR)" />
+                                                            </div>
+                                                        
+                                                        
 
 
                                                         <div class="px-6 pt-6 text-grey-darker text-justify flex flex-col">
@@ -711,12 +738,12 @@
                                                             <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="transaksi_sawit" type="number" @isset($items->details->transaksi_sawit) value="{{ $items->details->transaksi_sawit }}" @endisset min="0" id="transaksi_sawit" placeholder="Dana Pungutan Sawit" />
                                                             <label for="transaksi_sawit" class="block text-sm font-medium text-gray-700 mb-4">*Hanya untuk produk Sawit dan turunannya</label>
                                                         </div>
-
+                                                        @endif
 
                                                     </div>
-
-                                                    {{-- <div class="flex flex-row justify-between uppercase font-bold text-blue-dark border-b p-6">
-                                                        <p>Data Transaksi Perdagangan<p>
+                                                    @if ($items->jenis_pemberitahuan == "Pemasukan")
+                                                    <div class="flex flex-row justify-between uppercase font-bold text-blue-dark border-b p-6">
+                                                        <p>Data Dokumen Pelengkap Pabean<p>
                                                         <div class="cursor-pointer text-grey-dark hover:text-blue duration-4"><i class="fas fa-ellipsis-v"></i></div>
                                                     </div>
 
@@ -752,7 +779,11 @@
                                                             <label for="subsubpos_bc11" class="block text-sm font-medium text-gray-700 mb-4">Subsubpos Bc11</label>
                                                             <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="subsubpos_bc11" id="subsubpos_bc11" @isset($items->subsubpos_bc11) value="{{ $items->subsubpos_bc11 }}" @endisset placeholder="Subsubpos Bc11" />
                                                         </div>
-                                                    </div> --}}
+                                                    </div>
+
+                                                    
+                                                        
+                                                    @endif
 
                                                     <div class="flex flex-row justify-between uppercase font-bold text-blue-dark border-b p-6">
                                                         <p>Data Pengangkutan<p>
