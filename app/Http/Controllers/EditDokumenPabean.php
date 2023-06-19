@@ -52,6 +52,7 @@ class EditDokumenPabean extends Controller
 
             $detail = PpftzDetail::where('ppftz_id', $items->id)->first();
 
+            
             if (empty($detail)){
                 PpftzDetail::create([
                     'ppftz_id' => $items->id,
@@ -60,11 +61,19 @@ class EditDokumenPabean extends Controller
                     'ijin_bpk_pengirim' => $request->ijin_bpk_pengirim,
                     'tanggal_ijin_bpk_pengirim' => $request->tanggal_ijin_bpk_pengirim,
                     'negara_penerima' => $request->negara_penerima,
+                    'negara_tujuan' => $request->negara_tujuan,
                     'jenis_identitas_penjual' => $request->jenis_identitas_penjual,
                     'nomor_identitas_penjual' => $request->nomor_identitas_penjual,
                     'nama_penjual' => $request->nama_penjual,
                     'alamat_penjual' => $request->alamat_penjual,
-                    'negara_tujuan' => $request->negara_tujuan,
+                    'negara_penjual' => $request->negara_penjual,
+                
+                    'jenis_identitas_pembeli' => $request->jenis_identitas_pembeli,
+                    'nomor_identitas_pembeli' => $request->nomor_identitas_pembeli,
+                    'nama_pembeli' => $request->nama_pembeli,
+                    'alamat_pembeli' => $request->alamat_pembeli,
+                    'negara_pembeli' => $request->negara_pembeli,
+
                     'transaksi' => $request->transaksi,
                     'transaksi_valuta' => $request->transaksi_valuta,
                     'transaksi_kurs' => $request->transaksi_kurs,
@@ -75,6 +84,8 @@ class EditDokumenPabean extends Controller
                     'transaksi_maklon' => $request->transaksi_maklon,
                     'transaksi_sawit' => $request->transaksi_sawit,
                     'transaksi_curah' => $request->transaksi_curah,
+                    'transaksi_cif' => $request->transaksi_cif,
+                    'transaksi_voluntary' => $request->transaksi_voluntary,
                 ]);
             } else {
                 $detail->update([
@@ -89,6 +100,12 @@ class EditDokumenPabean extends Controller
                 'nama_penjual' => $request->nama_penjual,
                 'alamat_penjual' => $request->alamat_penjual,
                 'negara_tujuan' => $request->negara_tujuan,
+                'negara_penjual' => $request->negara_penjual,
+                'jenis_identitas_pembeli' => $request->jenis_identitas_pembeli,
+                'nomor_identitas_pembeli' => $request->nomor_identitas_pembeli,
+                'nama_pembeli' => $request->nama_pembeli,
+                'alamat_pembeli' => $request->alamat_pembeli,
+                'negara_pembeli' => $request->negara_pembeli,
                 'transaksi' => $request->transaksi,
                 'transaksi_valuta' => $request->transaksi_valuta,
                 'transaksi_kurs' => $request->transaksi_kurs,
@@ -99,6 +116,8 @@ class EditDokumenPabean extends Controller
                 'transaksi_maklon' => $request->transaksi_maklon,
                 'transaksi_sawit' => $request->transaksi_sawit,
                 'transaksi_curah' => $request->transaksi_curah,
+                'transaksi_cif' => $request->transaksi_cif,
+                'transaksi_voluntary' => $request->transaksi_voluntary,
             ]);
             }
             

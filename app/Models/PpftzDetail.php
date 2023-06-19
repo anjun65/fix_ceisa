@@ -22,6 +22,7 @@ class PpftzDetail extends Model
         'nama_penjual',
         'alamat_penjual',
         'negara_tujuan',
+        'negara_penjual',
         'transaksi',
         'transaksi_valuta',
         'transaksi_kurs',
@@ -34,6 +35,11 @@ class PpftzDetail extends Model
         'transaksi_curah',
         'transaksi_cif',
         'transaksi_voluntary',
+        'jenis_identitas_pembeli',
+        'nomor_identitas_pembeli',
+        'nama_pembeli',
+        'alamat_pembeli',
+        'negara_pembeli',
     ];
 
 

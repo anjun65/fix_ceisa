@@ -373,7 +373,7 @@
                 </td>
 
                 <td colspan="3" style="word-wrap: break-word;">
-                    : 
+                    : @if (!empty($item->details)){{ $item->details->nomor_identitas_pembeli }}@endif
                 </td>
 
                 <td colspan="2" class="p-2" style="border-left:1px solid black">
@@ -391,7 +391,7 @@
                 </td>
 
                 <td colspan="3" style="border-bottom:1px solid black">
-                    : 
+                    : @if (!empty($item->details)){{ $item->details->nama_pembeli }}, {{ $item->details->alamat_pembeli }}, {{ $item->details->negara_pembeli }}@endif
                 </td>
 
                 <td colspan="2" class="p-2" style="border-left:1px solid black;border-bottom:1px solid black">
@@ -399,7 +399,7 @@
                 </td>
 
                 <td colspan="3" style="border-right:1px solid black;border-bottom:1px solid black">
-                    : @if (!empty($item->details)){{ $item->details->nama_penjual }}, {{ $item->details->alamat_penjual }}, {{ $item->details->negara_tujuan }}@endif
+                    : @if (!empty($item->details)){{ $item->details->nama_penjual }}, {{ $item->details->alamat_penjual }}, {{ $item->details->negara_penjual }}@endif
                 </td>
             </tr>
 
