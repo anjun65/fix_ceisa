@@ -15,8 +15,8 @@ class AddCifToPpftzDetails extends Migration
     {
         Schema::table('ppftz_details', function (Blueprint $table) {
             $table->after('transaksi_fob', function (Blueprint $table) {
-                $table->string('transaksi_cif');
-                $table->string('transaksi_voluntary');
+                $table->string('transaksi_cif')->nullable();
+                $table->string('transaksi_voluntary')->nullable();
             });
         });
     }

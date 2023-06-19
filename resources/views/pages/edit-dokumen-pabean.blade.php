@@ -422,10 +422,9 @@
                                                             </x-input.select>
                                                         </div> --}}
 
-                                                        {{-- <div class="hidden px-6 pt-6 text-grey-darker text-justify flex flex-col">
+                                                        <div class="hidden px-6 pt-6 text-grey-darker text-justify flex flex-col">
                                                             <input class="flex-1 form-input border-cool-gray-300 block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5" name="nomor_aju_pabean" id="nomor_aju_pabean" value="{{ $nomor_aju_pabean }}" placeholder="" />
                                                         </div>
-                                                        @endif --}}
                                                         
                                                     </div>
                                                     

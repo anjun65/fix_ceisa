@@ -247,7 +247,7 @@
                 </td>
 
                 <td colspan="3" style="border-right:1px solid black">
-                    : {{ $item->details->cara_bayar }}
+                    : @if (!empty($item->details)){{ $item->details->cara_bayar }}@endif
                 </td>
             </tr>
 
@@ -275,7 +275,7 @@
                 </td>
 
                 <td colspan="3" style="border-bottom:1px solid black">
-                    : {{ $item->details->serah_barang }}
+                    : @if (!empty($item->details)){{ $item->details->serah_barang }}@endif
                 </td>
 
                 <td colspan="2" class="p-2" style="border-left:1px solid black;border-bottom:1px solid black">
@@ -309,7 +309,7 @@
                 </td>
 
                 <td colspan="3" style="word-wrap: break-word;">
-                    : {{ $item  ->nomor_identitas_pengirim }}
+                    : {{ $item->nomor_identitas_pengirim }}
                 </td>
 
                 <td colspan="2" class="p-2" style="border-left:1px solid black">
@@ -327,7 +327,7 @@
                 </td>
 
                 <td colspan="3" >
-                    : {{ $item->nama_penerima }}, {{ $item->alamat_penerima }}, {{ $item->details->negara_penerima }}
+                    : {{ $item->nama_pengirim }}, {{ $item->alamat_pengirim }}
                 </td>
 
                 <td colspan="2" class="p-2" style="border-left:1px solid black;">
@@ -335,7 +335,7 @@
                 </td>
 
                 <td colspan="3" style="border-right:1px solid black;">
-                    : {{ $item->nama_pengirim }}, {{ $item->alamat_pengirim }}
+                    : @if (!empty($item->details)){{ $item->nama_penerima }}, {{ $item->alamat_penerima }}, {{ $item->details->negara_penerima }}@endif
                 </td>
             </tr>
 
@@ -345,7 +345,7 @@
                 </td>
 
                 <td colspan="3" style="border-bottom:1px solid black">
-                    :  {{ $item->details->ijin_bpk_pengirim }}, Tanggal : {{ $item->details->tanggal_ijin_bpk_pengirim }}
+                    :  @if (!empty($item->details)){{ $item->details->ijin_bpk_pengirim }}, Tanggal : {{ $item->details->tanggal_ijin_bpk_pengirim }} @endif
                 </td>
 
                 <td colspan="2" class="p-2" style="border-left:1px solid black;border-bottom:1px solid black">
@@ -381,7 +381,7 @@
                 </td>
 
                 <td colspan="3" style="border-right:1px solid black">
-                    : {{ $item->details->nomor_identitas_penjual }}
+                    : @if (!empty($item->details)){{ $item->details->nomor_identitas_penjual }}@endif
                 </td>
             </tr>
 
@@ -399,7 +399,7 @@
                 </td>
 
                 <td colspan="3" style="border-right:1px solid black;border-bottom:1px solid black">
-                    : {{ $item->details->nama_penjual }}, {{ $item->details->alamat_penjual }}, {{ $item->details->negara_tujuan }}
+                    : @if (!empty($item->details)){{ $item->details->nama_penjual }}, {{ $item->details->alamat_penjual }}, {{ $item->details->negara_tujuan }}@endif
                 </td>
             </tr>
 
@@ -453,7 +453,7 @@
                 </td>
 
                 <td colspan="3" style="word-wrap: break-word;">
-                    : {{ $item->details->transaksi }}
+                    : @if (!empty($item->details)){{ $item->details->transaksi }}@endif
                 </td>
 
                 <td colspan="2" class="p-2" style="border-left:1px solid black">
@@ -475,7 +475,7 @@
                 </td>
 
                 <td colspan="3" style="word-wrap: break-word;">
-                    : {{ $item->details->transaksi_valuta }}
+                    : @if (!empty($item->details)){{ $item->details->transaksi_valuta }}@endif
                 </td>
 
                 <td colspan="2" class="p-2" style="border-left:1px solid black">
@@ -497,7 +497,7 @@
                 </td>
 
                 <td colspan="3" style="word-wrap: break-word;">
-                    : {{ $item->details->transaksi_kurs }}
+                    : @if (!empty($item->details)){{ $item->details->transaksi_kurs }}@endif
                 </td>
 
                 <td colspan="2" class="p-2" style="border-left:1px solid black">
@@ -541,7 +541,7 @@
                 </td>
 
                 <td colspan="3" style="word-wrap: break-word;">
-                    : 0.00
+                    : {{ $item->transaksi_cif }}
                 </td>
 
                 <td colspan="2" class="p-2" style="border-left:1px solid black">
@@ -563,7 +563,7 @@
                 </td>
 
                 <td colspan="3" style="word-wrap: break-word;">
-                    : {{ $item->details->transaksi_fob }}
+                    : @if (!empty($item->details)){{ $item->details->transaksi_fob }}@endif
                 </td>
 
                 <td colspan="2" class="p-2" style="border-left:1px solid black">
@@ -585,7 +585,7 @@
                 </td>
 
                 <td colspan="3" style="word-wrap: break-word;">
-                    : {{ $item->details->transaksi_freight }}
+                    : @if (!empty($item->details)){{ $item->details->transaksi_freight }}@endif
                 </td>
 
                 <td colspan="2" class="p-2" style="border-left:1px solid black">
@@ -607,11 +607,11 @@
                 </td>
 
                 <td colspan="3" style="word-wrap: break-word;">
-                    : @if ($item->details->jenis_asuransi == "1 - Dalam Negeri")[DN] 
+                    : @if (!empty($item->details))@if ($item->details->jenis_asuransi == "1 - Dalam Negeri")[DN] 
                     @else
                         [LN]
                     @endif
-                    {{ $item->details->transaksi_asuransi }}
+                    {{ $item->details->transaksi_asuransi }}@endif
                 </td>
 
                 <td colspan="2" class="p-2" style="border-left:1px solid black">
@@ -655,7 +655,7 @@
                 </td>
 
                 <td colspan="3" style="word-wrap: break-word;">
-                    : {{ $item->details->transaksi_maklon }}
+                    : @if (!empty($item->details)){{ $item->details->transaksi_maklon }}@endif
                 </td>
 
                 <td colspan="2" class="p-2" style="border-left:1px solid black">

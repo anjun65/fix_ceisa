@@ -58,29 +58,29 @@
                 <td colspan="2" class="px-3" style="border-left:1px solid black;">
                 </td>
                 <td colspan="4" class="px-3">
-                    Nomor :096670/SPPB/KPU.02/2023
+                    Nomor : {{ $item->id }}/SPPB/KPU.02/2023
                 </td>
 
                 <td colspan="4" class="px-3" style="border-right:1px solid black;">
-                    Tanggal : 16-05-2023
+                    Tanggal : {{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y');  }}
                 </td>
             </tr>
 
             <tr>
                 <td colspan="6" class="px-3" style="border-left:1px solid black;">
-                    Nomor Pendaftaran : 134018 <br/>
+                    Nomor Pendaftaran : {{ $item->id }} <br/>
                     PPFTZ-01 Dari LDP <br/>
                     Kepada :<br/>
                 </td>
 
                 <td colspan="4" class="px-3" style="border-right:1px solid black;">
-                    Tanggal : 16-05-2023
+                    Tanggal : {{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y');  }}
                 </td>
             </tr>
 
             <tr>
                 <td colspan="10" class="px-3" style="border-left:1px solid black;border-right:1px solid black;">
-                    Nomor Pendaftaran : 134018 <br/>
+                    Nomor Pendaftaran : {{ $item->id }} <br/>
                     PPFTZ-01 Dari LDP <br/>
                     Kepada :<br/>
                 </td>
@@ -94,11 +94,11 @@
 
             <tr>
                 <td colspan="2" class="px-5" style="border-left:1px solid black;">
-                    NPWP
+                    {{ $item->jenis_identitas_pengirim }}   
                 </td>
 
                 <td colspan="8" class="text-left" style="border-right:1px solid black;">
-                    : 0.453.635.6-215.000
+                    : {{ $item->nomor_identitas_pengirim }}
                 </td>
             </tr>
 
@@ -108,7 +108,7 @@
                 </td>
 
                 <td colspan="8" class="text-left" style="border-right:1px solid black;">
-                    : PT DVE MARINE ENGINEERING
+                    : {{ $item->nama_pengirim }}
                 </td>
             </tr>
 
@@ -118,7 +118,7 @@
                 </td>
 
                 <td colspan="8" class="text-left" style="border-right:1px solid black;">
-                    : Alamat
+                    : {{ $item->alamat_pengirim }}
                 </td>
             </tr>
 
@@ -134,7 +134,7 @@
                 </td>
 
                 <td colspan="8" class="text-left" style="border-right:1px solid black;">
-                    : 21.017.984.2-225.001
+                    : {{ $item->npwp_ppjk }}
                 </td>
             </tr>
 
@@ -144,7 +144,7 @@
                 </td>
 
                 <td colspan="8" class="text-left" style="border-right:1px solid black;">
-                    : BERLIAN DUMAI LOGISTICS
+                    : {{ $item->nama_ppjk }}
                 </td>
             </tr>
 
@@ -154,12 +154,12 @@
                 </td>
 
                 <td colspan="8" class="text-left" style="border-right:1px solid black;">
-                    : BERLIAN DUMAI LOGISTICS
+                    : {{ $item->alamat_ppjk }}
                 </td>
             </tr>
 
             <tr>
-                <td colspan="2" class="px-5" style="border-left:1px solid black;">
+                <td colspan="2" class="px-4" style="border-left:1px solid black;">
                     NP PPJK
                 </td>
 
@@ -174,7 +174,7 @@
                 </td>
 
                 <td colspan="2" class="px-3" >
-                    : SEWU
+                    : {{ $item->pos_bc11 }}
                 </td>
 
                 <td colspan="5" class="px-3" style="border-right:1px solid black;">
@@ -206,7 +206,7 @@
                 </td>
 
                 <td colspan="2" class="px-3">
-                    : 781A-03
+                    : {{ $item->nama_pengangkut }}
                 </td>
 
                 <td colspan="2" class="px-3">
@@ -224,7 +224,7 @@
                 </td>
 
                 <td colspan="2" class="px-3">
-                    : 781A
+                    : {{ $item->nomor_voy_flight_pol }}
                 </td>
 
                 <td colspan="2" class="px-3">
@@ -242,7 +242,7 @@
                 </td>
 
                 <td colspan="2" class="px-3">
-                    : 016701
+                    : {{ $item->nilai_bc11 }}
                 </td>
 
                 <td colspan="2" class="px-3">
@@ -250,7 +250,7 @@
                 </td>
 
                 <td colspan="3" class="px-3" style="border-right:1px solid black;">
-                    : 16-05-2023 Pos: 0003
+                    : {{ \Carbon\Carbon::parse($item->tanggal_bc11)->format('d-m-Y');  }} Pos: {{ $item->pos_bc11 }}
                 </td>
             </tr>
 
@@ -260,7 +260,7 @@
                 </td>
 
                 <td colspan="2" class="px-3">
-                    : 1 PK
+                    : {{ $item->jumlah_jenis_kemasan }} PK
                 </td>
 
                 <td colspan="2" class="px-3">
@@ -268,7 +268,7 @@
                 </td>
 
                 <td colspan="3" class="px-3" style="border-right:1px solid black;">
-                    : 116.500
+                    : {{ $item->berat_kotor }}
                 </td>
             </tr>
 
@@ -296,7 +296,7 @@
                 </td>
 
                 <td colspan="2" class="px-3">
-                    : 
+                    : {{ $item->jumlah_peti_kemas }}
                 </td>
 
                 <td colspan="2" class="px-3">
@@ -355,7 +355,7 @@
                 </td>
 
                 <td colspan="5" class="px-3" style="border-bottom:1px solid black;border-right:1px solid black;">
-                    Batam, 16-05-2023<br/>
+                    Batam, {{ \Carbon\Carbon::parse($item->created_at)->format('d-m-Y');  }}<br/>
                     Pejabat yang mengawasi pengeluaran<br/>
                     <br/>
                     Tanda tangan :

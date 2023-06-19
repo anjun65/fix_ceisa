@@ -15,7 +15,7 @@
                     <img class="h-3/4 align-middle inline-block" src="/img/logobc150.png" alt="">
                     <img class="h-3/4 align-middle inline-block" src="/img/logo-poltek.png" alt="">
                 </div>
-                <h1 class="text-2xl font-semibold text-gray-900 my-4">Selamat datang di Simulasi  Logistik CEISA 4.0</h1>
+                <h1 class="text-2xl font-semibold text-gray-900 my-4">Customs Excise Simulation</h1>
                 
                 {{ $slot }}
             </div>

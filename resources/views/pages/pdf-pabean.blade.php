@@ -231,7 +231,13 @@
                                     <a href="{{ route('print-pabean', $nomor_aju_pabean )}}" target='_blank' class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">PPFTZ</a>    
                                 </div>
                                 <div class="p-4">
-                                    <a href="{{ route('print-nppb-pabean', $nomor_aju_pabean )}}" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">NPPB</a>  
+
+                                    @if ($item->jenis_pemberitahuan == "Pemasukan")
+                                        <a href="{{ route('print-sppb-pabean', $nomor_aju_pabean )}}" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">SPPB</a>
+                                    @endif
+                                    @if ($item->jenis_pemberitahuan == "Pengeluaran")
+                                        <a href="{{ route('print-nppb-pabean', $nomor_aju_pabean )}}" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">NPPB</a>  
+                                    @endif
                                 </div>
                             </div>
                         </div>
