@@ -93,31 +93,31 @@
             </tr>
 
             <tr>
-                <td colspan="2" class="px-5" style="border-left:1px solid black;">
-                    {{ $item->jenis_identitas_pengirim }}   
+                <td colspan="3" class="px-5" style="border-left:1px solid black;">
+                    KTP
                 </td>
 
-                <td colspan="8" class="text-left" style="border-right:1px solid black;">
+                <td colspan="7" class="text-left" style="border-right:1px solid black;">
                     : {{ $item->nomor_identitas_pengirim }}
                 </td>
             </tr>
 
             <tr>
-                <td colspan="2" class="px-5" style="border-left:1px solid black;">
+                <td colspan="3" class="px-5" style="border-left:1px solid black;">
                     Nama
                 </td>
 
-                <td colspan="8" class="text-left" style="border-right:1px solid black;">
+                <td colspan="7" class="text-left" style="border-right:1px solid black;">
                     : {{ $item->nama_pengirim }}
                 </td>
             </tr>
 
             <tr>
-                <td colspan="2" class="px-5" style="border-left:1px solid black;">
+                <td colspan="3" class="px-5" style="border-left:1px solid black;">
                     Alamat
                 </td>
 
-                <td colspan="8" class="text-left" style="border-right:1px solid black;">
+                <td colspan="7" class="text-left" style="border-right:1px solid black;">
                     : {{ $item->alamat_pengirim }}
                 </td>
             </tr>
@@ -129,41 +129,41 @@
             </tr>
 
             <tr>
-                <td colspan="2" class="px-5" style="border-left:1px solid black;">
+                <td colspan="3" class="px-5" style="border-left:1px solid black;">
                     NPWP
                 </td>
 
-                <td colspan="8" class="text-left" style="border-right:1px solid black;">
+                <td colspan="7" class="text-left" style="border-right:1px solid black;">
                     : {{ $item->npwp_ppjk }}
                 </td>
             </tr>
 
             <tr>
-                <td colspan="2" class="px-5" style="border-left:1px solid black;">
+                <td colspan="3" class="px-5" style="border-left:1px solid black;">
                     Nama
                 </td>
 
-                <td colspan="8" class="text-left" style="border-right:1px solid black;">
+                <td colspan="7" class="text-left" style="border-right:1px solid black;">
                     : {{ $item->nama_ppjk }}
                 </td>
             </tr>
 
             <tr>
-                <td colspan="2" class="px-5" style="border-left:1px solid black;">
+                <td colspan="3" class="px-5" style="border-left:1px solid black;">
                     Alamat
                 </td>
 
-                <td colspan="8" class="text-left" style="border-right:1px solid black;">
+                <td colspan="7" class="text-left" style="border-right:1px solid black;">
                     : {{ $item->alamat_ppjk }}
                 </td>
             </tr>
 
             <tr>
-                <td colspan="2" class="px-4" style="border-left:1px solid black;">
+                <td colspan="3" class="px-5" style="border-left:1px solid black;">
                     NP PPJK
                 </td>
 
-                <td colspan="8" class="text-left" style="border-right:1px solid black;">
+                <td colspan="7" class="text-left" style="border-right:1px solid black;">
                     : -
                 </td>
             </tr>
@@ -308,13 +308,16 @@
                 </td>
             </tr>
 
+            @php
+                $peti = \App\Models\DataPeti::where('nomor_pengajuan_dokumen', $item->nomor_aju_pabean )->first();  
+            @endphp
             <tr>
                 <td colspan="3" class="px-3" style="border-left:1px solid black;">
                     Nomor peti kemas / ukuran
                 </td>
 
                 <td colspan="2" class="px-3">
-                    : 
+                    : @if ($peti){{ $peti->nomor }} / {{ $peti->ukuran }}@endif
                 </td>
 
                 <td colspan="2" class="px-3">

@@ -182,11 +182,14 @@
                     </td>                    
                 </tr>
 
+                @php
+                    $peti = \App\Models\DataPeti::where('nomor_pengajuan_dokumen', $item->nomor_aju_pabean )->first();  
+                @endphp
                 <tr>
                     <td colspan="5" class="px-5" style="border-left:1px solid black;">
                         PETI KEMAS<br/>
-                        a. Merk/Nomor:<br/>
-                        b. Ukuran:<br/>
+                        a. Merk/Nomor: @if ($peti) {{ $peti->tipe }}, {{ $peti->nomor }} @endif<br/>
+                        b. Ukuran: @if ($peti) {{ $peti->ukuran }} @endif<br/>
                     </td>
 
                     <td colspan="5" class="px-5" style="border-right:1px solid black;">

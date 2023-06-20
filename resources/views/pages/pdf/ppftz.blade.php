@@ -1349,7 +1349,7 @@
             </tr>
             <tr> 
                 <td colspan="2" class="p-2" style="border-left:1px solid black;">
-                    BATAM, Tanggal 16-05-2023
+                    BATAM, Tanggal {{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y');  }}
                 </td>
                 <td colspan="3" class="p-2" style="">
                     ........, Tanggal .......
@@ -1388,7 +1388,7 @@
 
             <tr> 
                 <td colspan="2" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black;">
-                    PT. Berlian Dumai Logistic
+                    {{ $item->nama_ppjk }}
                 </td>
                 <td colspan="3" class="p-2" style="border-bottom:1px solid black;">
                     <br/>
@@ -1416,62 +1416,36 @@
                 </td>
             </tr>
 
-            <tr> 
-                <td colspan="1" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black;">
-                    1.
-                </td>
-                <td colspan="4" class="p-2" style="border-bottom:1px solid black;">
-                    PACKING LIST
-                </td>
-                <td colspan="2" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;">
-                    7638
-                </td>
+            @php
+                $dokumens = \App\Models\DataDokumen::where('nomor_pengajuan_dokumen', $item->nomor_aju_pabean )->get();  
+            @endphp
+            
+            @foreach ( $dokumens as $dokumen)
+                <tr> 
+                    <td colspan="1" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black;">
+                        {{ $loop->iteration }}.
+                    </td>
+                    <td colspan="4" class="p-2" style="border-bottom:1px solid black;">
+                        {{ $dokumen->jenis_dokumen }}
+                    </td>
+                    <td colspan="2" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;">
+                        {{ $dokumen->nomor_dokumen }}
+                    </td>
 
-                <td colspan="3" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;">
-                    27-03-2023
-                </td>
-            </tr>
-
-            <tr> 
-                <td colspan="1" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black;">
-                    2.
-                </td>
-                <td colspan="4" class="p-2" style="border-bottom:1px solid black;">
-                    Invoice
-                </td>
-                <td colspan="2" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;">
-                    7638
-                </td>
-
-                <td colspan="3" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;">
-                    27-03-2023
-                </td>
-            </tr>
-
-            <tr> 
-                <td colspan="1" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black;">
-                    3.
-                </td>
-                <td colspan="4" class="p-2" style="border-bottom:1px solid black;">
-                    B/L
-                </td>
-                <td colspan="2" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;">
-                    7638
-                </td>
-
-                <td colspan="3" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;">
-                    27-03-2023
-                </td>
-            </tr>
+                    <td colspan="3" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black;border-right:1px solid black;">
+                        {{ $dokumen->tanggal_dokumen }}
+                    </td>
+                </tr>
+            @endforeach
 
             <tr> 
                 <td colspan="7" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black;">
                     
                 </td>
                 <td colspan="3" class="p-2" style="border-bottom:1px solid black;border-right:1px solid black;">
-                    BATAM, Tanggal 16-05-2023<br/>
+                    BATAM, Tanggal {{ \Carbon\Carbon::parse($item->created_at)->format('d/m/Y');  }}<br/>
                     Penguasa/Pemberitahu/PPJK<br/><br/><br/><br/>
-                    PT. BERLIAN DUMAI LOGISTICS
+                    {{ $item->nama_ppjk }}
                 </td>
             </tr>
         </tbody>
