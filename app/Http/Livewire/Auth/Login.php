@@ -23,13 +23,11 @@ class Login extends Component
     {
         $credentials = $this->validate();
 
-        dd($credentials);
         $response = Http::withOptions(['verify' => false])->asForm()->post('https://192.168.5.252/api/v1.php', [
             'act' => 'Login',
             'username' => $credentials['email'],
             'password' => $credentials['password'],
         ]);
-
 
         if ($response->successful()) {
             $data = $response->json();
