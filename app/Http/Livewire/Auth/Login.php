@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Auth;
 use Livewire\Component;
 use App\Models\User;
 use Auth;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class Login extends Component
 {
@@ -21,51 +23,76 @@ class Login extends Component
     {
         $credentials = $this->validate();
 
-        $data = array(
-                "username" => $credentials['email'],
-                "password" => $credentials['password'],
-                "token" => '4bwqxKTBRuVNxuRRwlo9h7KtNsEcwpk9',
-        );
+        $response = Http::withOptions(['verify' => false])->asForm()->post('https://192.168.5.252/api/v1.php', [
+            'act' => 'Login',
+            'username' => $credentials['email'],
+            'password' => $credentials['password'],
+        ]);
 
-        $ch = curl_init('http://sid.polibatam.ac.id/apilogin/web/api/auth/login');
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $result = json_decode(curl_exec($ch));
 
-        if(!empty($result->code)){
-            $this->addError('email', trans('auth.failed'));
-        }
-        
-        if($result->status == "success") {
-            $user = User::where('username', $credentials['email'])->first();
-            
-            if (!$user) {
+        if ($response->successful()) {
+            $data = $response->json();
+            $error_code = $data['error_code'];
+            if ($error_code === 0) {
+                $secretKey = $data['data']['secretkey'];
+                Session::put('secretkey', $secretKey);
                 
-                $newUser = User::create([                    
-                    'nomorInduk' => $result->data->nim_nik_unit,
-                    'username' => $result->data->username,
-                    'name' => $result->data->name,
-                    'email' => $result->data->email,
-                    'roles' => $result->data->jabatan,
+                $response = Http::withOptions(['verify' => false])->asForm()->post('https://192.168.5.252/api/v1.php', [
+                    'act' => 'GetBiodata',
+                    'secretkey' => $secretKey,
                 ]);
 
-                Auth::login($newUser);
-                // $request->session()->regenerate();
+                $user_data = $response->json();
 
-                return redirect('/');
+                if (empty($user_data['data'])){
+                    return back()->withErrors([
+                        'username' => 'Username atau password salah.',
+                    ]);
+                } 
+                
+                $user = User::where('email', $user_data['data']['email'])->first();               
+
+                if(!$user) {
+                    $new_user = User::create([
+                        'nomorInduk' => $user_data['data']['nik'],
+                        'username' => $credentials['email'],
+                        'name' => $user_data['data']['nama'],
+                        'email' => $user_data['data']['email'],
+                        'roles' => $user_data['data']['role'],
+                    ]);
+
+                    Auth::login($new_user);
+
+                    return redirect('/');
+
+                } else {
+
+                    Auth::login($user);
+
+
+                    return redirect('/');
+                    
+                }
+
             } else {
-
-                Auth::login($user);
-
-                return redirect('/');
+                $error_desc = $data['error_desc'];
+                
+                return back()->withErrors([
+                    'username' => $error_desc,
+                ]);
             }
-
-        }  
-        
-        else {
-            $this->addError('email', trans('auth.failed'));
+            
+        } else {
+            $statusCode = $response->status();
+            return back()->withErrors([
+                    'username' => 'Sedang maintenance',
+                ]);
         }
+
+ 
+        return back()->withErrors([
+            'username' => 'Username/password salah',
+        ]);
     }
 
     public function render()
