@@ -1,5 +1,18 @@
 <div>
     <form wire:submit.prevent="login" action="#" method="POST">
+
+        @if ($errors->any())
+            <div >
+                <div class="font-medium text-red-600">Whoops! Ada kesalahan.</div>
+            
+                <ul class="mt-3 list-disc list-inside text-sm text-red-600">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <div>
             <label for="email" class="block text-sm font-medium leading-5 text-gray-700">
                 Username Learning

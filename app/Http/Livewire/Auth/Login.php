@@ -31,7 +31,6 @@ class Login extends Component
 
         if ($response->successful()) {
             $data = $response->json();
-
             
             $error_code = $data['error_code'];
             if ($error_code === 0) {
@@ -46,9 +45,10 @@ class Login extends Component
                 $user_data = $response->json();
 
                 if (empty($user_data['data'])){
-                    return back()->withErrors([
-                        'username' => 'Username atau password salah.',
-                    ]);
+                    $this->addError('email', 'Username atau password salah.');
+                    // return back()->withErrors([
+                    //     'email' => 'Username atau password salah.',
+                    // ]);
                 } 
                 
                 $user = User::where('email', $user_data['data']['email'])->first();               
@@ -77,23 +77,27 @@ class Login extends Component
 
             } else {
                 $error_desc = $data['error_desc'];
+
+                $this->addError('email', $error_desc);
                 
-                return back()->withErrors([
-                    'username' => $error_desc,
-                ]);
+                // return back()->withErrors([
+                //     'email' => $error_desc,
+                // ]);
             }
             
         } else {
             $statusCode = $response->status();
-            return back()->withErrors([
-                    'username' => 'Sedang maintenance',
-                ]);
+
+            $this->addError('email', 'Sedang maintenance.');
+            // return back()->withErrors([
+            //         'email' => 'Sedang maintenance',
+            //     ]);
         }
 
- 
-        return back()->withErrors([
-            'username' => 'Username/password salah',
-        ]);
+        $this->addError('email', 'Username atau password salah.');
+        // return back()->withErrors([
+        //     'email' => 'Username/password salah',
+        // ]);
     }
 
     public function render()
