@@ -23,7 +23,7 @@ class Login extends Component
     {
         $credentials = $this->validate();
 
-        $response = Http::withOptions(['verify' => false])->asForm()->post('https://192.168.5.252/api/v1.php', [
+        $response = Http::withOptions(['verify' => false])->asForm()->post('https://sid.polibatam.ac.id/api/v1.php', [
             'act' => 'Login',
             'username' => $credentials['email'],
             'password' => $credentials['password'],
@@ -38,7 +38,7 @@ class Login extends Component
                 $secretKey = $data['data']['secretkey'];
                 Session::put('secretkey', $secretKey);
                 
-                $response = Http::withOptions(['verify' => false])->asForm()->post('https://192.168.5.252/api/v1.php', [
+                $response = Http::withOptions(['verify' => false])->asForm()->post('https://sid.polibatam.ac.id/api/v1.php', [
                     'act' => 'GetBiodata',
                     'secretkey' => $secretKey,
                 ]);
