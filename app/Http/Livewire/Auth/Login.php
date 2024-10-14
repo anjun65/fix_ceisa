@@ -32,6 +32,8 @@ class Login extends Component
 
         if ($response->successful()) {
             $data = $response->json();
+
+            dd($data);
             $error_code = $data['error_code'];
             if ($error_code === 0) {
                 $secretKey = $data['data']['secretkey'];
