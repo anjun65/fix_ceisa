@@ -29,7 +29,7 @@
 
                 <livewire:import-transactions />
 
-                {{-- <x-button.primary wire:click="create"><x-icon.plus/> New</x-button.primary> --}}
+                <x-button.primary wire:click="create"><x-icon.plus/> Baru</x-button.primary>
             </div>
         </div>
 
@@ -111,7 +111,10 @@
                                 <x-icon.cash class="text-cool-gray-400"/>
 
                                 <p class="text-cool-gray-600 truncate">
-                                    {{ $user->username }}
+                                    @if ($user->username)
+                                        {{ $user->username . ' - ' }}
+                                    @endif
+                                    {{ $user->email }}
                                 </p>
                             </span>
                         </x-table.cell>
@@ -166,8 +169,16 @@
             <x-slot name="title">Edit User</x-slot>
 
             <x-slot name="content">
+                <x-input.group for="name" label="Name" :error="$errors->first('editing.name')">
+                    <x-input.text wire:model.lazy="editing.name" id="name" placeholder="Name" />
+                </x-input.group>
+
                 <x-input.group for="email" label="Email" :error="$errors->first('editing.email')">
-                    <x-input.text wire:model="editing.email" id="email" placeholder="Email" />
+                    <x-input.text wire:model.lazy="editing.email" type="email" id="email" placeholder="Email" />
+                </x-input.group>
+
+                <x-input.group for="password" label="Password" :error="$errors->first('editing.password')">
+                    <x-input.text type="password" wire:model.lazy="editing.password" id="password" placeholder="Password" />
                 </x-input.group>
 
                 <x-input.group for="roles" label="Roles" :error="$errors->first('editing.roles')">

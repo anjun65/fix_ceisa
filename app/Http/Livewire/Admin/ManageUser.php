@@ -29,7 +29,9 @@ class ManageUser extends Component
     protected $listeners = ['refreshTransactions' => '$refresh'];
 
     public function rules() { return [
+        'editing.name' => 'required',
         'editing.email' => 'required',
+        'editing.password' => 'nullable',
         'editing.roles' => 'required',
     ]; }
 
@@ -88,10 +90,23 @@ class ManageUser extends Component
     {
         $this->validate();
     
+        if ($this->editing->password) {
+            $this->editing->fill([
+                'password' => Hash::make($this->editing->password),
+            ]);
+            
+            $this->editing->save();
 
-        $this->editing->save();
+            $this->editing->password = '';
+            $this->notify('Data Tersimpan');
+            $this->showEditModal = false;
+        } else {
+            $this->editing->save();
+            $this->notify('Data Tersimpan');
+            $this->showEditModal = false;
+        };
 
-        $this->showEditModal = false;
+        
     }
 
     public function resetFilters() { $this->reset('filters'); }

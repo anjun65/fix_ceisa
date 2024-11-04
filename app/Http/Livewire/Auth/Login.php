@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Auth;
 
 use Livewire\Component;
 use App\Models\User;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 
@@ -23,6 +23,12 @@ class Login extends Component
     {
         $credentials = $this->validate();
 
+    
+        if ($test = Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
+            return redirect('/');
+        }
+
+        
         $response = Http::withOptions(['verify' => false])->asForm()->post('https://sid.polibatam.ac.id/api/v1.php', [
             'act' => 'Login',
             'username' => $credentials['email'],

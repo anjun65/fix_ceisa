@@ -51,6 +51,7 @@ class SuratKuasa extends Component
         'editing.alamat_perusahaan_penerima' => 'required',
         'editing.kantor_bc_ftz' => 'required',
         'editing.ppftz_dikuasakan' => 'required',
+        'upload' => 'required',
     ]; }
 
     public function mount() { 

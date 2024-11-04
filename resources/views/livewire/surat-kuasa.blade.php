@@ -288,11 +288,12 @@
                 </x-input.group>
 
                 <x-input.group label="Upload File" for="photo" :error="$errors->first('upload')">
-                <x-input.file-upload wire:model="upload" accept="application/pdf" id="photo">
-                    @if ($upload)
-                        {{ $upload->getClientOriginalName()}}
-                    @endif
-                </x-input.file-upload>
+
+                    <input type="file" wire:model="upload" accept="application/pdf">
+                        @if ($upload)
+                            {{ $upload->getClientOriginalName()}}
+                        @endif
+                    </input>
                 </x-input.group>
 
                 <x-input.group for="awal_berlaku" label="Awal Berlaku" :borderless="true" :error="$errors->first('editing.awal_berlaku')">
