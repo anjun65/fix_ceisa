@@ -47,6 +47,7 @@ class IzinImpor extends Component
         'editing.nomor_surat' => 'required',
         'editing.tanggal_surat' => 'required',
         'editing.kantor_bc_ftz' => 'required',
+        'upload' => 'required',
     ]; }
 
     public function mount() { 

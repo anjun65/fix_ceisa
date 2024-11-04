@@ -233,12 +233,23 @@
                     </x-input.select>
                 </x-input.group>
 
-                <x-input.group label="Upload File" for="photo" :error="$errors->first('upload_dokumen')">
-                <x-input.file-upload wire:model="upload" accept="application/pdf" id="photo">
-                    @if ($upload)
-                        {{ $upload->getClientOriginalName()}}
-                    @endif
-                </x-input.file-upload>
+                <x-input.group label="Upload File" for="photo" :error="$errors->first('upload')">
+
+                    <div class="mt-4 flex text-sm leading-6 text-gray-600">
+                        <label for="file-upload" class="p-2 relative cursor-pointer rounded-md border border-gray-300 bg-gray-50 text-gray-500">
+                          <span>Upload a file</span>
+                          <input type="file" id="file-upload" wire:model="upload" accept="application/pdf" class="sr-only">
+                            </input>
+                        </label>
+                        
+                      </div>
+                      <p class="text-gray-600">
+                        @if ($upload)
+                            {{ $upload->getClientOriginalName()}}
+                        @endif
+                      </p>
+                      <p class="text-xs leading-5 text-gray-600">PDF, maksimal 10MB</p>
+                    
                 </x-input.group>
 
                 <x-input.group for="awal_berlaku" label="Tanggal Awal" :borderless="true" :error="$errors->first('editing.awal_berlaku')">
