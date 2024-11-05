@@ -28,7 +28,6 @@ class ConfigDocumentCode extends Component
     protected $listeners = ['refreshTransactions' => '$refresh'];
 
     public function rules() { return [
-        'editing.code' => 'required',
         'editing.name' => 'required',
     ]; }
 

@@ -116,6 +116,8 @@
             <x-slot name="title">Edit List Kode Dokumen</x-slot>
 
             <x-slot name="content">
+
+
                 <x-input.group for="name" label="Nama Kode Dokumen" :error="$errors->first('editing.name')">
                     <x-input.text wire:model="editing.name" id="title" placeholder="Nama Kode Dokumen" />
                 </x-input.group>
