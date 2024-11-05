@@ -121,8 +121,8 @@
             <x-slot name="title">Edit List Cara Pengangkutan</x-slot>
 
             <x-slot name="content">
-                <x-input.group for="name" label="Nama Cara Pengangkutan" :error="$errors->first('editing.name')">
-                    <x-input.text wire:model="editing.name" id="title" placeholder="Nama Cara Pengangkutan" />
+                <x-input.group for="cara" label="Nama Cara Pengangkutan" :error="$errors->first('editing.cara')">
+                    <x-input.text wire:model="editing.cara" id="title" placeholder="Nama Cara Pengangkutan" />
                 </x-input.group>
 
             </x-slot>
