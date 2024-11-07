@@ -17,19 +17,19 @@ class AddColumnToDataBarangTable extends Migration
 
 
             $table->after('bruto', function (Blueprint $table) {
-                $table->string('tipe');
-                $table->string('ukuran');
-                $table->string('spesifikasi_lain');
-                $table->string('kode_barang');
-                $table->string('asal_barang');
-                $table->string('jenis_satuan');
-                $table->string('jumlah_kemasan');
-                $table->string('jenis_kemasan');
-                $table->string('neto');
-                $table->string('volume');
-                $table->string('harga_ekspor');
-                $table->string('fob');
-                $table->string('is_lartas');
+                $table->string('tipe')->nullable();
+                $table->string('ukuran')->nullable();
+                $table->string('spesifikasi_lain')->nullable();
+                $table->string('kode_barang')->nullable();
+                $table->string('asal_barang')->nullable();
+                $table->string('jenis_satuan')->nullable();
+                $table->string('jumlah_kemasan')->nullable();
+                $table->string('jenis_kemasan')->nullable();
+                $table->string('neto')->nullable();
+                $table->string('volume')->nullable();
+                $table->string('harga_ekspor')->nullable();
+                $table->string('fob')->nullable();
+                $table->string('is_lartas')->nullable();
             });
             
             

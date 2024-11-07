@@ -190,7 +190,7 @@
                     <x-input.text wire:model="editing.kode_barang" id="kode_barang" placeholder="Kode Barang" />
                 </x-input.group>
 
-                <x-input.group for="asal_barang" label="Asal Barang" :error="$errors->first('editing.asal_barang')">
+                {{-- <x-input.group for="asal_barang" label="Asal Barang" :error="$errors->first('editing.asal_barang')">
                     <x-input.select wire:model="editing.asal_barang" id="asal_barang">
                             <option value="" disabled>Pilih Asal Barang...</option>
 
@@ -198,7 +198,7 @@
                             <option value="{{ $asal->name }}">{{ $asal->name }}</option>
                             @endforeach
                     </x-input.select>
-                </x-input.group>
+                </x-input.group> --}}
 
                 {{-- <x-input.group for="jumlah_satuan" label="Jumlah Satuan Dokumen" :error="$errors->first('')">
 

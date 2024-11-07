@@ -17,7 +17,7 @@ class CreateDataBarangsTable extends Migration
             $table->id();
             $table->string('nomor_pengajuan_dokumen');
             $table->string('uraian_barang');
-            $table->string('pos_tarif');
+            $table->string('pos_tarif')->nullable();
             $table->string('merek');
             $table->string('jumlah_satuan');
             $table->string('bruto');
