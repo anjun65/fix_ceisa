@@ -159,7 +159,7 @@
             <x-slot name="content">
 
                 <x-input.group for="seri" label="Seri" :error="$errors->first('editing.seri')">
-                    <x-input.text wire:model="editing.seri" id="seri" placeholder="Seri" />
+                    <x-input.text type="number" wire:model="editing.seri" id="seri" placeholder="Seri" />
                 </x-input.group>
 
                 <x-input.group for="jenis_dokumen" label="Jenis item" :error="$errors->first('editing.jenis_dokumen')">

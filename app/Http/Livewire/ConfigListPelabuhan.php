@@ -3,68 +3,44 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
+
+
+use App\Models\ConfigPelabuhan;
 use App\Http\Livewire\DataTable\WithSorting;
 use App\Http\Livewire\DataTable\WithCachedRows;
 use App\Http\Livewire\DataTable\WithBulkActions;
 use App\Http\Livewire\DataTable\WithPerPagePagination;
-use App\Models\DataBarang as DatabarangModel;
-use Livewire\WithFileUploads;
 
-class DataBarang extends Component
+class ConfigListPelabuhan extends Component
 {
-    use WithPerPagePagination, WithSorting, WithBulkActions, WithCachedRows, WithFileUploads;
+    use WithPerPagePagination, WithSorting, WithBulkActions, WithCachedRows;
 
     public $showDeleteModal = false;
     public $showEditModal = false;
     public $showFilters = false;
     public $filters = [
-        'search' => '',
+        'code' => '',
+        'name' => '',
     ];
-
-    public $nomor;
-    public DatabarangModel $editing;
-    public $upload;
+    public ConfigPelabuhan $editing;
 
     protected $queryString = ['sorts'];
 
     protected $listeners = ['refreshTransactions' => '$refresh'];
 
     public function rules() { return [
-        'editing.pos_tarif' => 'required',
-        'editing.uraian_barang' => 'required',
-        'editing.merek' => 'required',
-        'editing.jumlah_satuan' => 'required',
-        'editing.bruto' => 'required',
-        'editing.nomor_pengajuan_dokumen' => 'nullable',
-        'editing.pos_tarif' => 'nullable',
-        'editing.merek' => 'nullable',
-        'editing.bruto' => 'nullable',
-        'editing.tipe' => 'nullable',
-        'editing.ukuran' => 'nullable',
-        'editing.spesifikasi_lain' => 'nullable',
-        'editing.kode_barang' => 'nullable',
-        'editing.asal_barang' => 'nullable',
-        'editing.jenis_satuan' => 'nullable',
-        'editing.jumlah_kemasan' => 'nullable',
-        'editing.jenis_kemasan' => 'nullable',
-        'editing.neto' => 'nullable',
-        'editing.volume' => 'nullable',
-        'editing.harga_ekspor' => 'nullable',
-        'editing.fob' => 'nullable',
-        'editing.is_lartas' => 'nullable',
+        'editing.code' => 'required',
+        'editing.name' => 'required',
     ]; }
 
-    public function mount($nomor_aju_pabean) { 
-        $this->nomor = $nomor_aju_pabean;
-        $this->editing = $this->makeBlankTransaction();
-    }
+    public function mount() { $this->editing = $this->makeBlankTransaction(); }
     public function updatedFilters() { $this->resetPage(); }
 
     public function exportSelected()
     {
         return response()->streamDownload(function () {
             echo $this->selectedRowsQuery->toCsv();
-        }, 'izin_impor.csv');
+        }, 'valuta.csv');
     }
 
     public function deleteSelected()
@@ -80,7 +56,7 @@ class DataBarang extends Component
 
     public function makeBlankTransaction()
     {
-        return DatabarangModel::make(['date' => now(), 'status' => 'success']);
+        return ConfigPelabuhan::make();
     }
 
     public function toggleShowFilters()
@@ -99,7 +75,7 @@ class DataBarang extends Component
         $this->showEditModal = true;
     }
 
-    public function edit(DatabarangModel $transaction)
+    public function edit(ConfigPelabuhan $transaction)
     {
         $this->useCachedRows();
 
@@ -112,12 +88,7 @@ class DataBarang extends Component
     {
         $this->validate();
 
-        $this->editing->fill([
-            'nomor_pengajuan_dokumen' => $this->nomor,
-        ]);
-
         $this->editing->save();
-        $this->notify('Data Tersimpan');
 
         $this->showEditModal = false;
     }
@@ -126,9 +97,9 @@ class DataBarang extends Component
 
     public function getRowsQueryProperty()
     {
-        $query = DatabarangModel::query()
-            ->when($this->filters['search'], fn($query, $search) => $query->where('nomor', $search ))
-            ->when($this->nomor, fn($query, $nomor_pengajuan_dokumen) => $query->where('nomor_pengajuan_dokumen', $nomor_pengajuan_dokumen));
+        $query = ConfigPelabuhan::query()
+            ->when($this->filters['code'], fn($query, $code) => $query->where('code', 'like', '%'.$code.'%'))
+            ->when($this->filters['name'], fn($query, $name) => $query->where('name', 'like', '%'.$name.'%'));
 
         return $this->applySorting($query);
     }
@@ -142,11 +113,9 @@ class DataBarang extends Component
 
     public function render()
     {
-        
-
-        return view('livewire.data-barang', [
+        return view('livewire.config-list-pelabuhan', [
             'items' => $this->rows,
-            'nomor_aju_pabean' => $this->nomor,
-        ]);
+        ])->layout('layouts.admin');
     }
+
 }

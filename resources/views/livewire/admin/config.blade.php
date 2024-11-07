@@ -127,7 +127,20 @@
                                 </div>
                             </a>
 
-                            
+                            <a href={{ route('list-pelabuhan-config') }} class="cursor-pointer w-full border-gray-100 rounded-t border-b hover:bg-teal-100">
+                                <div class="flex w-full items-center p-2 pl-2 border-transparent border-l-2 relative hover:border-teal-100">
+                                    <div class="w-6 flex flex-col items-center">
+                                        <div class="flex relative w-5 h-5 justify-center items-center m-1 mr-2 w-4 h-4 mt-1 rounded-full ">
+                                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20" />    
+                                            </svg>    
+                                        </div>
+                                    </div>
+                                    <div class="w-full items-center flex">
+                                        <div class="mx-2">List Pelabuhan</div>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
