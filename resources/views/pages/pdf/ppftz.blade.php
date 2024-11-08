@@ -932,7 +932,7 @@
                 <td colspan="4" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black">
                     - {{ $barang->pos_tarif ?? '-' }}  <br/>
                     - {{ $barang->merek ?? '' }}, {{ $barang->tipe ?? '' }}, {{ $barang->ukuran ?? '' }}, {{ $barang->spesifikasi_lain ?? '' }} <br/>
-                    - {{ $item->asal_barang }} <br/>
+                    - {{ $item->asal_barang ?? ''}} <br/>
                 </td>
 
                 <td colspan="1" class="p-2" style="border-bottom:1px solid black;border-right:1px solid black;border-left:1px solid black">
@@ -944,13 +944,13 @@
                     PPN 11.00 % 100 BBS <br/>
                 </td>
                 <td colspan="2" class="p-2" style="border-bottom:1px solid black;border-right:1px solid black;border-left:1px solid black">
-                    {{ $barang->jumlah_satuan ? '' }} {{ $barang->jenis_satuan ? '' }} <br/>
+                    {{ $barang->jumlah_satuan ?? '' }}, {{ $barang->jenis_satuan ?? '' }} <br/>
                     Berat Bersih <br/>
-                    {{ $barang->neto ? 0 }} <br/>
+                    {{ $barang->neto ?? 0 }} <br/>
                     Berat Kotor <br/>
-                    {{ $barang->bruto ? 0 }} <br/>
+                    {{ $barang->bruto ?? 0 }} <br/>
                     Volume <br/>
-                    {{ $barang->volume ? 0 }}  <br/>
+                    {{ $barang->volume ?? 0 }}  <br/>
                 </td>
                 <td colspan="1" class="p-2" style="border-bottom:1px solid black;border-right:1px solid black;border-left:1px solid black">
                     Nilai Pabean<br/>
