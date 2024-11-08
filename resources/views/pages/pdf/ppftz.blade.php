@@ -957,6 +957,7 @@
                     1,280.52
                 </td>
             </tr>
+            @endforeach
             <tr>    
                 <td colspan="3" class="p-2" style="border:1px solid black;">
                     Jenis Pungutan
