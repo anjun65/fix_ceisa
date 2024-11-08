@@ -35,7 +35,6 @@ class DataBarang extends Component
         'editing.merek' => 'required',
         'editing.bruto' => 'required',
         'editing.nomor_pengajuan_dokumen' => 'nullable',
-        'editing.pos_tarif' => 'nullable',
         'editing.merek' => 'nullable',
         'editing.jumlah_satuan' => 'required',
         'editing.tipe' => 'nullable',

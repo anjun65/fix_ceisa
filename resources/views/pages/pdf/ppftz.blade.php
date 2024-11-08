@@ -919,15 +919,20 @@
                 </td>
             </tr>
 
+            @php
+                $barangs = \App\Models\DataBarang::where('nomor_pengajuan_dokumen', $item->nomor_aju_pabean )->get();  
+            @endphp
+            
+            @foreach ($barangs as $barang)
             <tr>    
                 <td colspan="1" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black">
-                    1
+                    {{ $loop->iteration }}.
                 </td>
 
                 <td colspan="4" class="p-2" style="border-bottom:1px solid black;border-left:1px solid black">
-                    - 40121290  <br/>
-                    - Tyre FOR JLG 4045R <br/>
-                    - SG - SINGAPORE <br/>
+                    - {{ $barang->pos_tarif ?? '-' }}  <br/>
+                    - {{ $barang->merek ?? '' }}, {{ $barang->tipe ?? '' }}, {{ $barang->ukuran ?? '' }}, {{ $barang->spesifikasi_lain ?? '' }} <br/>
+                    - {{ $item->asal_barang }} <br/>
                 </td>
 
                 <td colspan="1" class="p-2" style="border-bottom:1px solid black;border-right:1px solid black;border-left:1px solid black">
@@ -939,13 +944,13 @@
                     PPN 11.00 % 100 BBS <br/>
                 </td>
                 <td colspan="2" class="p-2" style="border-bottom:1px solid black;border-right:1px solid black;border-left:1px solid black">
-                    4000 PCE <br/>
+                    {{ $barang->jumlah_satuan ? '' }} {{ $barang->jenis_satuan ? '' }} <br/>
                     Berat Bersih <br/>
-                       116.500 <br/>
+                    {{ $barang->neto ? 0 }} <br/>
                     Berat Kotor <br/>
-                    116.500 <br/>
+                    {{ $barang->bruto ? 0 }} <br/>
                     Volume <br/>
-                    0 <br/>
+                    {{ $barang->volume ? 0 }}  <br/>
                 </td>
                 <td colspan="1" class="p-2" style="border-bottom:1px solid black;border-right:1px solid black;border-left:1px solid black">
                     Nilai Pabean<br/>
